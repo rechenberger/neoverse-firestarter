@@ -10,6 +10,10 @@ const entries = [
     name: 'Home',
     href: '/',
   },
+  {
+    name: 'Galaxy',
+    href: '/galaxy',
+  },
 ]
 
 export function MainTopNav({
