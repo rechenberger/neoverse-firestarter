@@ -20,6 +20,7 @@ export const Galaxy = () => {
           maxDistance={50}
           minPolarAngle={Math.PI / 8}
           maxPolarAngle={Math.PI / 4}
+          polarAngle={Math.PI / 4}
           // minPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
           // maxPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
           enabled
