@@ -16,6 +16,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@react-three/drei": "^9.86.3",
     "@react-three/fiber": "^8.14.4",
+    "@react-three/rapier": "^1.1.1",
     "@teampilot/sdk": "^0.0.12",
     "@types/node": "20.6.3",
     "@types/react": "18.2.22",
@@ -39,6 +40,7 @@
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.157.0",
+    "three-stdlib": "^2.26.11",
     "typescript": "5.2.2",
     "zod": "^3.22.2"
   },
