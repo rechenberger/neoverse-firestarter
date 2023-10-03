@@ -28,6 +28,8 @@
     "jotai": "^2.4.3",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.279.0",
+    "miniplex": "^2.0.0",
+    "miniplex-react": "^2.0.1",
     "next": "13.5.2",
     "next-themes": "^0.2.1",
     "postcss": "8.4.30",
@@ -36,11 +38,13 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.157.0",
     "typescript": "5.2.2",
     "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.9",
+    "@types/three": "^0.156.0",
     "prettier": "^3.0.3"
   }
 }
