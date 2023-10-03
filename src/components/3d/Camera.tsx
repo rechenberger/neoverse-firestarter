@@ -11,11 +11,12 @@ export const Camera = () => {
       <CameraControls
         // ref={cameraControlsRef}
         // target={cameraTarget}
-        minDistance={10}
+        distance={40}
+        minDistance={30}
         maxDistance={50}
-        minPolarAngle={Math.PI / 8}
-        maxPolarAngle={Math.PI / 4}
-        polarAngle={Math.PI / 4}
+        // minPolarAngle={Math.PI / 8}
+        // maxPolarAngle={Math.PI / 4}
+        // polarAngle={Math.PI / 8}
         // minPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
         // maxPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
         enabled

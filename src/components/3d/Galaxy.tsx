@@ -9,8 +9,8 @@ export const Galaxy = () => {
     <>
       <Canvas className="bg-gradient-to-tr from-purple-900/50 to-black bg-blend-darken flex-1">
         <Physics gravity={[0, 0, 0]} colliders={false} timeStep="vary">
-          <ambientLight intensity={0.2} />
-          <pointLight position={[10, 10, 10]} intensity={1.0} />
+          <ambientLight intensity={0.1} />
+          <directionalLight position={[30, 0, 30]} intensity={1} />
           <Stars />
           <Camera />
           <Grid

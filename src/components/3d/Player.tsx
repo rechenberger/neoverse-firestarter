@@ -26,7 +26,7 @@ export const Player = () => {
                     .array as Float32Array,
                 ]}
               />
-              <primitive object={gltf.scene} />
+              <primitive object={gltf.scene} dispose={null} />
             </group>
           </ECS.Component>
         </RigidBody>
