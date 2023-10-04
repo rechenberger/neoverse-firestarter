@@ -1,4 +1,5 @@
 // import { RigidBody } from '@react-three/rapier'
+import { RapierRigidBody } from '@react-three/rapier'
 import { World } from 'miniplex'
 import { createReactAPI } from 'miniplex-react'
 import { Object3D, Vector3 } from 'three'
@@ -13,7 +14,7 @@ export type Entity = {
   player?: true
 
   sceneObject?: Object3D
-  rigidBody?: any
+  rigidBody?: RapierRigidBody
 }
 
 export const world = new World<Entity>()

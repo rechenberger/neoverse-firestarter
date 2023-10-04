@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { Camera } from './Camera'
 import { Player } from './Player'
+import { Systems } from './Systems'
 
 export const Galaxy = () => {
   return (
@@ -27,6 +28,7 @@ export const Galaxy = () => {
             position={[3.2, 0, 3.5]}
           />
           <Player />
+          <Systems />
         </Physics>
       </Canvas>
     </>
