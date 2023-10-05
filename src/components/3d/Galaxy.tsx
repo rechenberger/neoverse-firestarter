@@ -25,7 +25,8 @@ export const Galaxy = () => {
             cellSize={5}
             sectionSize={5}
             // sectionThickness={0}
-            position={[3.2, 0, 3.5]}
+            position={[0, 0, 0]}
+            rotation={[Math.PI / 2, 0, 0]}
           />
           <Player />
           <Systems />
