@@ -14,7 +14,7 @@ export const usePlayerMovement = () => {
       console.log(rb)
       rb.resetForces(true)
       rb.resetTorques(true)
-      rb.applyImpulse(movementDirection.multiplyScalar(0.1), true)
+      rb.applyImpulse(movementDirection.multiplyScalar(1), true)
     }
   })
 }

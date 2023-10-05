@@ -2,6 +2,7 @@ import { useLoader } from '@react-three/fiber'
 import { ConvexHullCollider, RigidBody } from '@react-three/rapier'
 import { Mesh } from 'three'
 import { GLTFLoader } from 'three-stdlib'
+import { ForkedECSComponent } from './ForkedComponent'
 import { ECS } from './world'
 
 export const Player = () => {
@@ -10,7 +11,7 @@ export const Player = () => {
   return (
     <ECS.Entity>
       <ECS.Component name="player" data={true} />
-      <ECS.Component name="rigidBody">
+      <ForkedECSComponent name="rigidBody">
         <RigidBody
           angularDamping={3}
           linearDamping={1}
@@ -18,7 +19,7 @@ export const Player = () => {
           enabledRotations={[false, false, true]}
           scale={0.5}
         >
-          <ECS.Component name="sceneObject">
+          <ForkedECSComponent name="sceneObject">
             <group>
               <ConvexHullCollider
                 args={[
@@ -28,9 +29,9 @@ export const Player = () => {
               />
               <primitive object={gltf.scene} />
             </group>
-          </ECS.Component>
+          </ForkedECSComponent>
         </RigidBody>
-      </ECS.Component>
+      </ForkedECSComponent>
     </ECS.Entity>
   )
 }

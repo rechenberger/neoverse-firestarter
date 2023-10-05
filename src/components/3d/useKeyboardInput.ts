@@ -38,8 +38,8 @@ export const useKeyboardMovementDirection = () => {
 
   const direction = useMemo(() => {
     let direction = new Vector3()
-    if (w || ArrowUp) direction.z -= 1
-    if (s || ArrowDown) direction.z += 1
+    if (w || ArrowUp) direction.y += 1
+    if (s || ArrowDown) direction.y -= 1
     if (a || ArrowLeft) direction.x -= 1
     if (d || ArrowRight) direction.x += 1
     if (direction.length() > 0) direction = direction.normalize()
