@@ -30,7 +30,6 @@ export const Galaxy = () => {
             rotation={[Math.PI / 2, 0, 0]}
           />
           <Player />
-          <Player />
           <Asteroids />
           <Systems />
         </Physics>

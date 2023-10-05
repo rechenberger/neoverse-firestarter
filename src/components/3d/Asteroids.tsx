@@ -27,7 +27,7 @@ export const Asteroids = () => {
             <RigidBody
               position={asteroid.spawnPosition}
               scale={asteroid.scale}
-              // quaternion={tmpQuaterion.random()}
+              quaternion={tmpQuaterion.random()}
               angularDamping={2}
               linearDamping={0.5}
               enabledTranslations={[true, true, false]}
