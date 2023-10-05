@@ -16,11 +16,6 @@ export const Asteroids = () => {
 
   return (
     <>
-      {/* <Instances
-        limit={1000} // Optional: max amount of items (for calculating buffer size)
-        range={1000} // Optional: draw-range
-        {...gltf.scene}
-      > */}
       <ECS.Entities in={entities}>
         {({ asteroid }) => (
           <ECS.Component name="rigidBody">
@@ -41,36 +36,12 @@ export const Asteroids = () => {
                 //   Layers.Bullet,
                 // ])}
                 args={[mesh.geometry.attributes.position.array as Float32Array]}
-                // onCollisionEnter={(e) => {
-                //   const position = tmpVec3
-                //     .copy(e.manifold.localContactPoint1(0) as Vector3)
-                //     .applyQuaternion(e.collider.rotation() as Quaternion)
-                //     .add(e.collider.translation() as Vector3)
-
-                //   // spawnSmokeVFX({ position })
-                // }}
               />
-              {/* <Astroid /> */}
-              {/* <Instance />
-  
-{/* <Instance
-                // color="red"
-                // scale={2}
-                // position={[1, 2, 3]}
-                // rotation={[Math.PI / 3, 0, 0]}
-                /> */}
               <primitive object={gltf.scene.clone()} />
-              {/* <Instance>
-                  <primitive object={gltf.scene} />
-                </Instance> */}
-              {/* <ECS.Component name="sceneObject">
-                <Particle matrixAutoUpdate={false} />
-              </ECS.Component> */}
             </RigidBody>
           </ECS.Component>
         )}
       </ECS.Entities>
-      {/* </Instances> */}
     </>
   )
 }
