@@ -5,13 +5,13 @@ import { ECS } from './world'
 export const usePlayerMovement = () => {
   const players = ECS.world.with('player', 'rigidBody', 'sceneObject')
   const movementDirection = useKeyboardMovementDirection()
-  console.log(movementDirection)
+  // console.log(movementDirection)
   useFrame(() => {
     for (const player of players.entities) {
-      console.log(player)
+      // console.log(player)
       const rb = player.rigidBody
       if (!rb) continue
-      console.log(rb)
+      // console.log(rb)
       rb.resetForces(true)
       rb.resetTorques(true)
       rb.applyImpulse(movementDirection.multiplyScalar(1), true)
