@@ -1,16 +1,16 @@
-import { useLoader } from '@react-three/fiber'
+import { useGLTF } from '@react-three/drei'
 import { ConvexHullCollider, RigidBody } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { startTransition, useLayoutEffect } from 'react'
 import { Mesh, Quaternion, Vector3 } from 'three'
-import { GLTFLoader } from 'three-stdlib'
+import { AstroidModel } from './AstroidModel'
 import { ECS } from './world'
 
 const tmpQuaterion = new Quaternion()
 const tmpVec3 = new Vector3()
 
 export const Asteroids = () => {
-  const gltf = useLoader(GLTFLoader, '/models/asteroid03.gltf')
+  const gltf = useGLTF('/models/asteroid03.gltf')
   const mesh = gltf.scene.children[0] as Mesh
   const entities = useLotsOfAsteroidsAndAlsoCleanThemUp(100)
   const players = useEntities(ECS.world.with('player'))
@@ -58,7 +58,7 @@ export const Asteroids = () => {
                 // ])}
                 args={[mesh.geometry.attributes.position.array as Float32Array]}
               />
-              <primitive object={gltf.scene.clone()} />
+              <AstroidModel />
             </RigidBody>
           </ECS.Component>
         )}
