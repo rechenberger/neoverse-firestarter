@@ -7,8 +7,7 @@ import { Vector3 } from 'three'
 import { ECS } from './world'
 
 const playerQuery = ECS.world.with('player', 'sceneObject')
-const offset = 40
-const tmpVec3 = new Vector3()
+const tmpVec = new Vector3()
 
 export const Camera = () => {
   // TODO: refactor in ECS?
@@ -19,10 +18,14 @@ export const Camera = () => {
     if (!player) return
     const cameraControls = cameraControlsRef.current
     if (!cameraControls) return
-    const pos = tmpVec3
-    player.sceneObject.getWorldPosition(pos)
-    cameraControls.setPosition(pos.x, pos.y, offset)
-    cameraControls.setTarget(...pos.toArray())
+    player.sceneObject.getWorldPosition(tmpVec)
+    const x = tmpVec.x
+    const y = tmpVec.y
+    const z = tmpVec.z
+    cameraControls.getPosition(tmpVec)
+    const cameraZ = tmpVec.z
+    cameraControls.setPosition(x, y, cameraZ)
+    cameraControls.setTarget(x, y, z)
   })
   return (
     <>
