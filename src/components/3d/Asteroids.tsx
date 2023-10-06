@@ -61,13 +61,15 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = (count: number) => {
   useLayoutEffect(() => {
     /* Spawn a bunch of asteroids */
     startTransition(() => {
-      for (let i = 0; i < count; i++) {
-        spawnAsteroid(
-          new Vector3(Math.random() * 200 - 100, Math.random() * 200 - 100, 0),
-          // new Vector3(10, -20 + i, 0),
-          Math.random() * 1.2 + 0.8,
-          // 0.2,
-        )
+      const size = 6
+      const radius = 30
+      const circumference = 2 * Math.PI * radius
+      const fitInCircumference = Math.floor(circumference / size)
+      for (let i = 0; i < fitInCircumference; i++) {
+        const angle = (i / fitInCircumference) * Math.PI * 2
+        const x = Math.cos(angle) * radius
+        const y = Math.sin(angle) * radius
+        spawnAsteroid(new Vector3(x, y, 0), Math.random() * 1.2 + 0.8)
       }
     })
 
