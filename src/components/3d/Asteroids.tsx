@@ -37,11 +37,16 @@ export const Asteroids = () => {
                 player.sceneObject.getWorldPosition(tmpVec3)
                 let direction = tmpVec3.clone()
                 evt.target.colliderObject?.getWorldPosition(tmpVec3)
-                direction = direction
-                  .sub(tmpVec3)
-                  .normalize()
-                  .multiplyScalar(250)
-                player.rigidBody?.applyImpulse(direction, true)
+                direction = direction.sub(tmpVec3).normalize()
+
+                player.rigidBody?.applyImpulse(
+                  direction.clone().multiplyScalar(250),
+                  true,
+                )
+                evt.target.rigidBody?.applyImpulse(
+                  direction.clone().multiplyScalar(-100),
+                  true,
+                )
               }}
             >
               <ConvexHullCollider
