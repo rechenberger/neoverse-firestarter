@@ -4,6 +4,7 @@ import { useKeyboardMovementDirection } from './useKeyboardInput'
 import { ECS } from './world'
 
 const gravitationalForce = new Vector3(0, -0.5)
+const zUp = new Vector3(0, 0, 1)
 
 export const usePlayerMovement = () => {
   const players = ECS.world.with('player', 'rigidBody', 'sceneObject')
@@ -23,8 +24,8 @@ export const usePlayerMovement = () => {
       const direction = movementDirection
         .clone()
         .add(gravitationalForce)
-        .applyAxisAngle(new Vector3(0, 0, 1), angle)
-        .multiplyScalar(1)
+        .applyAxisAngle(zUp, angle)
+      // .multiplyScalar(1)
 
       rb.resetForces(true)
       rb.resetTorques(true)
