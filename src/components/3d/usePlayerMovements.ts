@@ -3,6 +3,8 @@ import { Vector3 } from 'three'
 import { useKeyboardMovementDirection } from './useKeyboardInput'
 import { ECS } from './world'
 
+const gravitationalForce = new Vector3(0, -0.5)
+
 export const usePlayerMovement = () => {
   const players = ECS.world.with('player', 'rigidBody', 'sceneObject')
   const cameras = ECS.world.with('cameraControls')
@@ -20,6 +22,7 @@ export const usePlayerMovement = () => {
       const angle = camera.cameraControls.azimuthAngle
       const direction = movementDirection
         .clone()
+        .add(gravitationalForce)
         .applyAxisAngle(new Vector3(0, 0, 1), angle)
         .multiplyScalar(1)
 
