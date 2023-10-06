@@ -19,6 +19,7 @@ export const Player = () => {
           enabledTranslations={[true, true, false]}
           enabledRotations={[false, false, true]}
           scale={0.5}
+          // density={0.1}
         >
           <ForkedECSComponent name="sceneObject">
             <group>
@@ -27,6 +28,7 @@ export const Player = () => {
                   (gltf.scene.children[0] as Mesh).geometry.attributes.position
                     .array as Float32Array,
                 ]}
+                // density={0.1}
               />
               <primitive object={gltf.scene} />
             </group>

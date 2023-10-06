@@ -13,6 +13,7 @@ export const Asteroids = () => {
   const gltf = useLoader(GLTFLoader, '/models/asteroid03.gltf')
   const mesh = gltf.scene.children[0] as Mesh
   const entities = useLotsOfAsteroidsAndAlsoCleanThemUp(100)
+  const players = useEntities(ECS.world.with('player'))
 
   return (
     <>
@@ -27,6 +28,21 @@ export const Asteroids = () => {
               linearDamping={0.5}
               enabledTranslations={[true, true, false]}
               enabledRotations={[true, true, true]}
+              onCollisionEnter={(evt) => {
+                const player = players.entities.find(
+                  (e) => e.rigidBody === evt.other.rigidBody,
+                )
+                if (!player) return
+                if (!player.sceneObject) return
+                player.sceneObject.getWorldPosition(tmpVec3)
+                let direction = tmpVec3.clone()
+                evt.target.colliderObject?.getWorldPosition(tmpVec3)
+                direction = direction
+                  .sub(tmpVec3)
+                  .normalize()
+                  .multiplyScalar(250)
+                player.rigidBody?.applyImpulse(direction, true)
+              }}
             >
               <ConvexHullCollider
                 density={3}

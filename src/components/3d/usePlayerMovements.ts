@@ -25,10 +25,10 @@ export const usePlayerMovement = () => {
         .clone()
         .add(gravitationalForce)
         .applyAxisAngle(zUp, angle)
-      // .multiplyScalar(1)
+        .multiplyScalar(5)
 
-      rb.resetForces(true)
-      rb.resetTorques(true)
+      // rb.resetForces(true)
+      // rb.resetTorques(true)
       rb.applyImpulse(direction, true)
     }
   })
