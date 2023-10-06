@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { Asteroids } from './Asteroids'
 import { Camera } from './Camera'
+import { DeviceOrientationDialog } from './DeviceOrientationDialog'
 import { GalaxyEnvironment } from './GalaxyEnvironment'
 import { Player } from './Player'
 import { Systems } from './Systems'
@@ -12,6 +13,7 @@ const DEBUG = false
 export const Galaxy = () => {
   return (
     <>
+      <DeviceOrientationDialog />
       <Canvas className="bg-gradient-to-tr from-black to-black bg-blend-darken flex-1">
         <Stats />
         <Physics

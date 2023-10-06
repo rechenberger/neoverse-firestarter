@@ -5,12 +5,6 @@ export const useDeviceOrientationSupported = () => {
   const [supported, setSupported] = useState(true)
   const [needsPermission, setNeedsPermission] = useState(true)
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (!('DeviceOrientationEvent' in window)) return
-    setSupported(true)
-  }, [])
-
   const request = () => {
     if (typeof window === 'undefined') return
     if (!('DeviceOrientationEvent' in window)) return
@@ -29,6 +23,13 @@ export const useDeviceOrientationSupported = () => {
       setNeedsPermission(false)
     }
   }
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (!('DeviceOrientationEvent' in window)) return
+    setSupported(true)
+    request()
+  }, [])
 
   return {
     supported,
