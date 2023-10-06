@@ -45,15 +45,6 @@ export const Asteroids = () => {
     </>
   )
 }
-export const spawnAsteroid = (position: Vector3, scale: number = 1) => {
-  ECS.world.add({
-    asteroid: {
-      spawnPosition: position,
-      scale,
-    },
-    health: 250 * scale,
-  })
-}
 
 const useLotsOfAsteroidsAndAlsoCleanThemUp = (count: number) => {
   const entities = useEntities(ECS.world.with('asteroid'))
@@ -61,15 +52,30 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = (count: number) => {
   useLayoutEffect(() => {
     /* Spawn a bunch of asteroids */
     startTransition(() => {
+      const layers = 10
       const size = 6
-      const radius = 30
-      const circumference = 2 * Math.PI * radius
-      const fitInCircumference = Math.floor(circumference / size)
-      for (let i = 0; i < fitInCircumference; i++) {
-        const angle = (i / fitInCircumference) * Math.PI * 2
-        const x = Math.cos(angle) * radius
-        const y = Math.sin(angle) * radius
-        spawnAsteroid(new Vector3(x, y, 0), Math.random() * 1.2 + 0.8)
+      const minRadius = 30
+
+      for (let layer = 0; layer < layers; layer++) {
+        const radius = minRadius + layer * size
+        const circumference = 2 * Math.PI * radius
+        const fitInCircumference = Math.floor(circumference / size)
+        for (let i = 0; i < fitInCircumference; i++) {
+          const angle = (i / fitInCircumference) * Math.PI * 2
+          const x = Math.cos(angle) * radius
+          const y = Math.sin(angle) * radius
+
+          const position = new Vector3(x, y, 0)
+          const scale = Math.random() * 1.2 + 0.8
+
+          ECS.world.add({
+            asteroid: {
+              spawnPosition: position,
+              scale,
+            },
+            health: 250 * scale,
+          })
+        }
       }
     })
 

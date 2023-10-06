@@ -11,9 +11,9 @@ export const Camera = () => {
       <CameraControls
         // ref={cameraControlsRef}
         // target={cameraTarget}
-        distance={40}
+        distance={80}
         minDistance={30}
-        maxDistance={50}
+        maxDistance={150}
         // minPolarAngle={Math.PI / 8}
         // maxPolarAngle={Math.PI / 4}
         // polarAngle={Math.PI / 8}
