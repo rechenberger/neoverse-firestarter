@@ -2,7 +2,7 @@ import { CameraControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { first } from 'lodash-es'
 import { useEntities } from 'miniplex-react'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Vector3 } from 'three'
 import { ECS } from './world'
 
@@ -24,9 +24,20 @@ export const Camera = () => {
     const z = tmpVec.z
     cameraControls.getPosition(tmpVec)
     const cameraZ = tmpVec.z
-    cameraControls.setPosition(x, y, cameraZ)
-    cameraControls.setTarget(x, y, z)
+    // cameraControls.setPosition(x, y, cameraZ)
+    // cameraControls.setTarget(x, y, z)
+    cameraControls.setLookAt(x, y, cameraZ, x, y, z, false)
+    // cameraControls.updateCameraUp()
+    // Rotate camera so that 0,0,0 is down
+    cameraControls.camera.up.set(0, 0, 1)
+    cameraControls.updateCameraUp()
+    const angle = Math.atan2(y, x)
+    cameraControls.rotateAzimuthTo(angle - Math.PI / 2, false)
   })
+  useEffect(() => {
+    cameraControlsRef.current?.camera.up.set(0, 0, 1)
+    cameraControlsRef.current?.updateCameraUp()
+  }, [])
   return (
     <>
       {/* <PerspectiveCamera
@@ -42,11 +53,13 @@ export const Camera = () => {
         maxDistance={150}
         // minPolarAngle={Math.PI / 8}
         // maxPolarAngle={Math.PI / 4}
-        // polarAngle={Math.PI / 8}
+        polarAngle={0}
         // minPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
         // maxPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
         enabled
         makeDefault
+
+        // azimuthAngle={Math.PI / 2}
         // dollyToCursor={true}
         // enablePan={false}
         // azimuthalAngle
