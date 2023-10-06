@@ -1,5 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import { Vector3 } from 'three'
+import { useDeviceOrientationInput } from './useDeviceOrientationInput'
 import { useKeyboardMovementDirection } from './useKeyboardInput'
 import { ECS } from './world'
 
@@ -9,7 +10,9 @@ const zUp = new Vector3(0, 0, 1)
 export const usePlayerMovement = () => {
   const players = ECS.world.with('player', 'rigidBody', 'sceneObject')
   const cameras = ECS.world.with('cameraControls')
-  const movementDirection = useKeyboardMovementDirection()
+  const keyDirection = useKeyboardMovementDirection()
+  const deviceOrientationDirection = useDeviceOrientationInput()
+  const movementDirection = deviceOrientationDirection?.vector || keyDirection
   // console.log(movementDirection)
   useFrame(() => {
     for (const player of players.entities) {
