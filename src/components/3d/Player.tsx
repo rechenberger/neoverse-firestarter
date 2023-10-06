@@ -13,6 +13,7 @@ export const Player = () => {
       <ECS.Component name="player" data={true} />
       <ForkedECSComponent name="rigidBody">
         <RigidBody
+          position={[0, 100, 0]}
           angularDamping={3}
           linearDamping={1}
           enabledTranslations={[true, true, false]}

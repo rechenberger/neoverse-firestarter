@@ -77,6 +77,14 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = (count: number) => {
           })
         }
       }
+
+      ECS.world.add({
+        asteroid: {
+          spawnPosition: new Vector3(0, 0, 0),
+          scale: 10,
+        },
+        health: 250 * 10,
+      })
     })
 
     return () => {
