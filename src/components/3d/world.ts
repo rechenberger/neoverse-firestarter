@@ -11,6 +11,7 @@ export type Entity = {
   asteroid?: {
     spawnPosition: Vector3
     scale: number
+    color: string
   }
   player?: true
 

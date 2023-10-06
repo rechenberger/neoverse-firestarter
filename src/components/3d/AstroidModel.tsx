@@ -8,7 +8,9 @@ export const AstroidModel = ({ color = 'gray' }: { color?: string }) => {
   console.log('gltf', gltf)
   const ref = useRef<Mesh>()
   const material = useMemo(() => {
-    return new MeshStandardMaterial({ color: new Color(color) })
+    return new MeshStandardMaterial({
+      color: new Color(color),
+    })
   }, [color])
   useFrame(() => {
     if (!ref.current) return
