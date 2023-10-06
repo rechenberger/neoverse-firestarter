@@ -1,6 +1,28 @@
 import { CameraControls } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { first } from 'lodash-es'
+import { useEntities } from 'miniplex-react'
+import { useRef } from 'react'
+import { Vector3 } from 'three'
+import { ECS } from './world'
+
+const playerQuery = ECS.world.with('player', 'sceneObject')
+const offset = 40
 
 export const Camera = () => {
+  // TODO: refactor in ECS?
+  const cameraControlsRef = useRef<CameraControls | null>(null)
+  const players = useEntities(playerQuery)
+  useFrame(() => {
+    const player = first(players.entities)
+    if (!player) return
+    const cameraControls = cameraControlsRef.current
+    if (!cameraControls) return
+    const pos = new Vector3()
+    player.sceneObject.getWorldPosition(pos)
+    cameraControls.setPosition(pos.x, pos.y, offset)
+    cameraControls.setTarget(...pos.toArray())
+  })
   return (
     <>
       {/* <PerspectiveCamera
@@ -9,7 +31,7 @@ export const Camera = () => {
           // rotation={[-Math.PI / 2, 0, 0]}
         /> */}
       <CameraControls
-        // ref={cameraControlsRef}
+        ref={cameraControlsRef}
         // target={cameraTarget}
         distance={80}
         minDistance={30}
