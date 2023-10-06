@@ -5,7 +5,6 @@ import { Color, Mesh, MeshStandardMaterial } from 'three'
 
 export const AstroidModel = ({ color = 'gray' }: { color?: string }) => {
   const gltf = useGLTF('/models/asteroid03.gltf')
-  console.log('gltf', gltf)
   const ref = useRef<Mesh>()
   const material = useMemo(() => {
     return new MeshStandardMaterial({

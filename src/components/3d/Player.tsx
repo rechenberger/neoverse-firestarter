@@ -31,6 +31,13 @@ export const Player = () => {
                 // density={0.1}
               />
               <primitive object={gltf.scene} />
+              <pointLight
+                intensity={200}
+                // distance={10 ** 10}
+                position={[0, 10, 8]}
+                color={'#fff'}
+                castShadow
+              />
             </group>
           </ForkedECSComponent>
         </RigidBody>

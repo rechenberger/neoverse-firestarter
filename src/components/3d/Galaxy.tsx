@@ -11,14 +11,14 @@ const DEBUG = false
 export const Galaxy = () => {
   return (
     <>
-      <Canvas className="bg-gradient-to-tr from-purple-900/50 to-black bg-blend-darken flex-1">
+      <Canvas className="bg-gradient-to-tr from-black to-black bg-blend-darken flex-1">
         <Physics
           gravity={[0, 0, 0]}
           colliders={false}
           timeStep="vary"
           debug={DEBUG}
         >
-          <ambientLight intensity={1} />
+          {/* <ambientLight intensity={1} /> */}
           <directionalLight position={[30, 0, 30]} intensity={1} />
           <Stars />
           <Camera />
