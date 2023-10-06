@@ -4,6 +4,7 @@ import { first } from 'lodash-es'
 import { useEntities } from 'miniplex-react'
 import { useEffect, useRef } from 'react'
 import { Vector3 } from 'three'
+import { ForkedECSComponent } from './ForkedComponent'
 import { ECS } from './world'
 
 const playerQuery = ECS.world.with('player', 'sceneObject')
@@ -24,13 +25,7 @@ export const Camera = () => {
     const z = tmpVec.z
     cameraControls.getPosition(tmpVec)
     const cameraZ = tmpVec.z
-    // cameraControls.setPosition(x, y, cameraZ)
-    // cameraControls.setTarget(x, y, z)
     cameraControls.setLookAt(x, y, cameraZ, x, y, z, false)
-    // cameraControls.updateCameraUp()
-    // Rotate camera so that 0,0,0 is down
-    cameraControls.camera.up.set(0, 0, 1)
-    cameraControls.updateCameraUp()
     const angle = Math.atan2(y, x)
     cameraControls.rotateAzimuthTo(angle - Math.PI / 2, false)
   })
@@ -40,49 +35,19 @@ export const Camera = () => {
   }, [])
   return (
     <>
-      {/* <PerspectiveCamera
-          makeDefault
-          // position={[-3, 0, -10]}
-          // rotation={[-Math.PI / 2, 0, 0]}
-        /> */}
-      <CameraControls
-        ref={cameraControlsRef}
-        // target={cameraTarget}
-        distance={80}
-        minDistance={30}
-        maxDistance={150}
-        // minPolarAngle={Math.PI / 8}
-        // maxPolarAngle={Math.PI / 4}
-        polarAngle={0}
-        // minPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
-        // maxPolarAngle={selectedPlanetId ? Math.PI / 4 : Math.PI / 8}
-        enabled
-        makeDefault
-
-        // azimuthAngle={Math.PI / 2}
-        // dollyToCursor={true}
-        // enablePan={false}
-        // azimuthalAngle
-        // :
-        // 0.9103473397698809
-        // distance
-        // :
-        // 8.790434579553098
-        // polarAngle
-        // :
-        // 0.25
-        // minAzimuthAngle={0}
-        // maxAzimuthAngle={0}
-        // onEnd={(evt) => {
-        //   const orbit = evt?.target
-        //   if (!orbit) return
-        //   console.log({
-        //     polarAngle: orbit.getPolarAngle() / Math.PI,
-        //     azimuthalAngle: orbit.getAzimuthalAngle(),
-        //     distance: orbit.getDistance(),
-        //   })
-        // }}
-      />
+      <ECS.Entity>
+        <ForkedECSComponent name={'cameraControls'}>
+          <CameraControls
+            ref={cameraControlsRef}
+            distance={80}
+            minDistance={30}
+            maxDistance={150}
+            polarAngle={0}
+            enabled
+            makeDefault
+          />
+        </ForkedECSComponent>
+      </ECS.Entity>
     </>
   )
 }

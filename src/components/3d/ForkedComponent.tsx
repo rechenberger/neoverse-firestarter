@@ -1,9 +1,9 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
-import { ECS, world } from './world'
+import { ECS, Entity, world } from './world'
 
 // FROM: https://github.com/hmans/miniplex/blob/f40b96cd702148b0c23a9c1e141ae0fd615ac6fc/packages/react/src/createReactAPI.tsx#L122-L156
 export const ForkedECSComponent = (props: {
-  name: any
+  name: keyof Entity
   data?: any
   children?: ReactNode
 }) => {

@@ -1,4 +1,5 @@
 // import { RigidBody } from '@react-three/rapier'
+import { CameraControls } from '@react-three/drei'
 import { RapierRigidBody } from '@react-three/rapier'
 import { World } from 'miniplex'
 import { createReactAPI } from 'miniplex-react'
@@ -15,6 +16,7 @@ export type Entity = {
 
   sceneObject?: Object3D
   rigidBody?: RapierRigidBody
+  cameraControls?: CameraControls
 }
 
 export const world = new World<Entity>()
