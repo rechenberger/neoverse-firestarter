@@ -12,7 +12,7 @@ const tmpVec3 = new Vector3()
 export const Asteroids = () => {
   const gltf = useGLTF('/models/asteroid03.gltf')
   const mesh = gltf.scene.children[0] as Mesh
-  const entities = useLotsOfAsteroidsAndAlsoCleanThemUp(100)
+  const entities = useLotsOfAsteroidsAndAlsoCleanThemUp()
   const players = useEntities(ECS.world.with('player'))
 
   return (
@@ -67,7 +67,7 @@ export const Asteroids = () => {
   )
 }
 
-const useLotsOfAsteroidsAndAlsoCleanThemUp = (count: number) => {
+const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
   const entities = useEntities(ECS.world.with('asteroid'))
 
   useLayoutEffect(() => {
