@@ -2,7 +2,7 @@ import { CollisionEnterPayload } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { useCallback } from 'react'
 import { Vector3 } from 'three'
-import { ECS, Entity } from './world'
+import { ECS, Entity, world } from './world'
 
 const tmpVec3 = new Vector3()
 
@@ -24,12 +24,16 @@ export const useAstroidPlayerCollision = () => {
         direction.clone().multiplyScalar(250),
         true,
       )
-      eAstroid.rigidBody?.applyImpulse(
-        direction.clone().multiplyScalar(-100),
-        true,
-      )
       if (eAstroid.health) {
         eAstroid.health.current -= 5
+        if (eAstroid.health.current <= 0) {
+          world.remove(eAstroid)
+        } else {
+          eAstroid.rigidBody?.applyImpulse(
+            direction.clone().multiplyScalar(-100),
+            true,
+          )
+        }
       }
     },
     [players.entities],

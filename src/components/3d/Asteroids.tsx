@@ -83,7 +83,7 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
               color,
             },
             health: {
-              current: 250 * scale,
+              current: 10,
             },
           })
         }
