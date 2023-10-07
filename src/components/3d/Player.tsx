@@ -11,6 +11,13 @@ export const Player = () => {
   return (
     <ECS.Entity>
       <ECS.Component name="player" data={true} />
+      <ECS.Component
+        name="health"
+        data={{
+          current: 100,
+          max: 100,
+        }}
+      />
       <ForkedECSComponent name="rigidBody">
         <RigidBody
           position={[0, 120, 0]}

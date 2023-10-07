@@ -14,7 +14,6 @@ export const useAstroidPlayerCollision = () => {
         (e) => e.rigidBody === evt.other.rigidBody,
       )
       if (!player) return
-      console.log('ASTROID COLLISION', eAstroid)
       if (!player.sceneObject) return
       player.sceneObject.getWorldPosition(tmpVec3)
       let direction = tmpVec3.clone()
@@ -29,6 +28,9 @@ export const useAstroidPlayerCollision = () => {
         direction.clone().multiplyScalar(-100),
         true,
       )
+      if (eAstroid.health) {
+        eAstroid.health.current -= 5
+      }
     },
     [players.entities],
   )

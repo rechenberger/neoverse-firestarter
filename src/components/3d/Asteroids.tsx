@@ -82,7 +82,9 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
               scale,
               color,
             },
-            health: 250 * scale,
+            health: {
+              current: 250 * scale,
+            },
           })
         }
       }
@@ -93,7 +95,9 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
           scale: 10,
           color: 'white',
         },
-        health: 250 * 10,
+        health: {
+          current: 250 * 10,
+        },
       })
     })
 

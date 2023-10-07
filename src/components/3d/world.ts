@@ -18,6 +18,11 @@ export type Entity = {
   sceneObject?: Object3D
   rigidBody?: RapierRigidBody
   cameraControls?: CameraControls
+
+  health?: {
+    current: number
+    max?: number
+  }
 }
 
 export const world = new World<Entity>()
