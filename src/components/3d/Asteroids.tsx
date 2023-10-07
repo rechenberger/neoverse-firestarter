@@ -3,7 +3,7 @@ import { ConvexHullCollider, RigidBody } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { startTransition, useLayoutEffect } from 'react'
 import { Mesh, Quaternion, Vector3 } from 'three'
-import { AstroidModel } from './AstroidModel'
+import { AsteroidModel } from './AsteroidModel'
 import { ECS } from './world'
 
 const tmpQuaterion = new Quaternion()
@@ -58,7 +58,7 @@ export const Asteroids = () => {
                 // ])}
                 args={[mesh.geometry.attributes.position.array as Float32Array]}
               />
-              <AstroidModel color={asteroid.color} />
+              <AsteroidModel color={asteroid.color} />
             </RigidBody>
           </ECS.Component>
         )}

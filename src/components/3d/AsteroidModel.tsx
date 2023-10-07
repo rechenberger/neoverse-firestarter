@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import { Color, Mesh, MeshStandardMaterial } from 'three'
 
-export const AstroidModel = ({ color = 'gray' }: { color?: string }) => {
+export const AsteroidModel = ({ color = 'gray' }: { color?: string }) => {
   const gltf = useGLTF('/models/asteroid03.gltf')
   const ref = useRef<Mesh>()
   const material = useMemo(() => {
