@@ -4,16 +4,16 @@ import { useEntities } from 'miniplex-react'
 import { startTransition, useLayoutEffect } from 'react'
 import { Mesh, Quaternion, Vector3 } from 'three'
 import { AsteroidModel } from './AsteroidModel'
+import { useAstroidPlayerCollision } from './useAstroidPlayerCollision'
 import { ECS } from './world'
 
 const tmpQuaterion = new Quaternion()
-const tmpVec3 = new Vector3()
 
 export const Asteroids = () => {
   const gltf = useGLTF('/models/asteroid03.gltf')
   const mesh = gltf.scene.children[0] as Mesh
   const entities = useLotsOfAsteroidsAndAlsoCleanThemUp()
-  const players = useEntities(ECS.world.with('player'))
+  const { onCollision } = useAstroidPlayerCollision()
 
   return (
     <>
@@ -28,26 +28,7 @@ export const Asteroids = () => {
               linearDamping={0.5}
               enabledTranslations={[true, true, false]}
               enabledRotations={[true, true, true]}
-              onCollisionEnter={(evt) => {
-                const player = players.entities.find(
-                  (e) => e.rigidBody === evt.other.rigidBody,
-                )
-                if (!player) return
-                if (!player.sceneObject) return
-                player.sceneObject.getWorldPosition(tmpVec3)
-                let direction = tmpVec3.clone()
-                evt.target.colliderObject?.getWorldPosition(tmpVec3)
-                direction = direction.sub(tmpVec3).normalize()
-
-                player.rigidBody?.applyImpulse(
-                  direction.clone().multiplyScalar(250),
-                  true,
-                )
-                evt.target.rigidBody?.applyImpulse(
-                  direction.clone().multiplyScalar(-100),
-                  true,
-                )
-              }}
+              onCollisionEnter={onCollision}
             >
               <ConvexHullCollider
                 density={3}
