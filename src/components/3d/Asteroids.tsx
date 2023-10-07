@@ -4,6 +4,7 @@ import { useEntities } from 'miniplex-react'
 import { startTransition, useLayoutEffect } from 'react'
 import { Mesh, Quaternion, Vector3 } from 'three'
 import { AsteroidModel } from './AsteroidModel'
+import { ForkedECSComponent } from './ForkedComponent'
 import { useAstroidPlayerCollision } from './useAstroidPlayerCollision'
 import { ECS } from './world'
 
@@ -18,17 +19,17 @@ export const Asteroids = () => {
   return (
     <>
       <ECS.Entities in={entities}>
-        {({ asteroid }) => (
-          <ECS.Component name="rigidBody">
+        {(eAstroid) => (
+          <ForkedECSComponent name="rigidBody">
             <RigidBody
-              position={asteroid.spawnPosition}
-              scale={asteroid.scale}
+              position={eAstroid.asteroid.spawnPosition}
+              scale={eAstroid.asteroid.scale}
               quaternion={tmpQuaterion.random()}
               angularDamping={2}
               linearDamping={0.5}
               enabledTranslations={[true, true, false]}
               enabledRotations={[true, true, true]}
-              onCollisionEnter={onCollision}
+              onCollisionEnter={(evt) => onCollision({ eAstroid, evt })}
             >
               <ConvexHullCollider
                 density={3}
@@ -39,9 +40,9 @@ export const Asteroids = () => {
                 // ])}
                 args={[mesh.geometry.attributes.position.array as Float32Array]}
               />
-              <AsteroidModel color={asteroid.color} />
+              <AsteroidModel color={eAstroid.asteroid.color} />
             </RigidBody>
-          </ECS.Component>
+          </ForkedECSComponent>
         )}
       </ECS.Entities>
     </>

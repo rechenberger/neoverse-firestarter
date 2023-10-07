@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import { Color, Mesh, MeshStandardMaterial } from 'three'
+import { ForkedECSComponent } from './ForkedComponent'
 
 export const AsteroidModel = ({ color = 'gray' }: { color?: string }) => {
   const gltf = useGLTF('/models/asteroid03.gltf')
@@ -22,7 +23,9 @@ export const AsteroidModel = ({ color = 'gray' }: { color?: string }) => {
   })
   return (
     <>
-      <primitive object={gltf.scene.clone()} ref={ref} />
+      <ForkedECSComponent name="sceneObject">
+        <primitive object={gltf.scene.clone()} ref={ref} />
+      </ForkedECSComponent>
     </>
   )
 }
