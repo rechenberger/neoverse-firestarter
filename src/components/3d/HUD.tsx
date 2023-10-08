@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { Wrench } from 'lucide-react'
 import { useEntities } from 'miniplex-react'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
@@ -53,26 +54,63 @@ const StartButton = () => {
       setInit(true)
     }, 2000)
   })
+  const hasUpgrade = false
+  const canUpgrade = false
+  const showUpgrade = hasUpgrade || canUpgrade
   return (
     <>
       <div
         className={cn(
           'absolute inset-x-0 flex flex-col items-center bottom-24',
-          'transition-all duration-1000 opacity-0',
-          init && 'opacity-100',
         )}
       >
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={() => {
-            startGame()
-            metaState.mode = 'gameplay'
-          }}
-          className="text-3xl italic font-extrabold py-8 px-16"
-        >
-          START
-        </Button>
+        <div className="flex flex-col gap-2">
+          {showUpgrade && (
+            <div
+              className={cn(
+                'transition-all duration-1000 opacity-0 delay-500',
+                init && 'opacity-100',
+              )}
+            >
+              <Button
+                variant="outline"
+                size="lg"
+                className={cn(
+                  'text-lg font-bold py-2 px-4 uppercase flex flex-row gap-2 relative w-full',
+                )}
+              >
+                {canUpgrade && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                )}
+                <Wrench className="w-4 h-4" />
+                <span>upgrade</span>
+              </Button>
+            </div>
+          )}
+          <div
+            className={cn(
+              'transition-all duration-1000 opacity-0',
+              init && 'opacity-100',
+            )}
+          >
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                startGame()
+                metaState.mode = 'gameplay'
+              }}
+              className={cn(
+                'text-3xl italic font-extrabold py-8 px-16 uppercase w-full',
+              )}
+            >
+              Start
+            </Button>
+          </div>
+        </div>
       </div>
     </>
   )
