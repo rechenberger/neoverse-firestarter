@@ -2,6 +2,7 @@ import { useEntities } from 'miniplex-react'
 import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import { Progress } from '../ui/progress'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
 import { Entity, world } from './world'
@@ -24,8 +25,14 @@ const HudPlayer = ({ player }: { player: Entity }) => {
   const abc = useSnapshot(player.health!)
   return (
     <>
-      <div className="absolute bottom-4 left-4 rounded bg-card border p-4">
-        Health {abc?.current}/{abc?.max}
+      <div className="absolute bottom-4 left-4 rounded-xl bg-card border p-2 flex flex-col w-72 gap-1">
+        <div className="flex flex-row">
+          <span className="font-bold flex-1">Health&nbsp;</span>
+          <span>
+            {abc?.current}/{abc?.max}
+          </span>
+        </div>
+        <Progress value={(100 * abc?.current) / (abc?.max || 1)} />
       </div>
     </>
   )
