@@ -15,20 +15,20 @@ export const useAstroidPlayerCollision = () => {
       )
       if (!player) return
       if (!player.sceneObject) return
-      player.sceneObject.getWorldPosition(tmpVec3)
-      let direction = tmpVec3.clone()
-      eAstroid?.sceneObject?.getWorldPosition(tmpVec3)
-      direction = direction.sub(tmpVec3).normalize()
 
-      player.rigidBody?.applyImpulse(
-        direction.clone().multiplyScalar(250),
-        true,
-      )
       if (eAstroid.health) {
         eAstroid.health.current -= 5
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
         } else {
+          player.sceneObject.getWorldPosition(tmpVec3)
+          let direction = tmpVec3.clone()
+          eAstroid?.sceneObject?.getWorldPosition(tmpVec3)
+          direction = direction.sub(tmpVec3).normalize()
+          player.rigidBody?.applyImpulse(
+            direction.clone().multiplyScalar(250),
+            true,
+          )
           eAstroid.rigidBody?.applyImpulse(
             direction.clone().multiplyScalar(-100),
             true,
