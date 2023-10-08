@@ -2,7 +2,7 @@ import { CollisionEnterPayload } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { useCallback } from 'react'
 import { Vector3 } from 'three'
-import { changeHealth } from './entityActions'
+import { changeHealth } from './changeHealth'
 import { ECS, Entity, world } from './world'
 
 const tmpVec3 = new Vector3()
