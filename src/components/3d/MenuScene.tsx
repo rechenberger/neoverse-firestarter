@@ -1,11 +1,16 @@
-import { CameraControls, useGLTF } from '@react-three/drei'
+import { CameraControls, Float, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
+import { Color, Mesh, MeshStandardMaterial } from 'three'
 
 export const MenuScene = () => {
   return (
     <>
       <MenuPlayer />
+      <MenuAstroid color="#ef4444" position={[5, 5, -10]} />
+      <MenuAstroid color="#10b981" position={[8, 4, -12]} />
+      <MenuAstroid color="gray" position={[-6, 3, -4]} />
+      <MenuAstroid color="orange" position={[-4, -2, 3]} />
       <CameraControls
         distance={12}
         // polarAngle={0}
@@ -35,5 +40,39 @@ const MenuPlayer = () => {
         castShadow
       />
     </group>
+  )
+}
+
+const MenuAstroid = ({
+  color = 'gray',
+  position,
+}: {
+  color?: string
+  position: [number, number, number]
+}) => {
+  const gltf = useGLTF('/models/asteroid03.gltf')
+  const ref = useRef<Mesh>()
+  const material = useMemo(() => {
+    return new MeshStandardMaterial({
+      color: new Color(color),
+    })
+  }, [color])
+  useFrame(() => {
+    if (!ref.current) return
+    // ref.current.material = material
+    ref.current?.traverse((node) => {
+      if (node instanceof Mesh) {
+        node.material = material
+      }
+    })
+  })
+  return (
+    <>
+      <group position={position}>
+        <Float enabled speed={3} floatIntensity={3}>
+          <primitive object={gltf.scene.clone()} ref={ref} />
+        </Float>
+      </group>
+    </>
   )
 }
