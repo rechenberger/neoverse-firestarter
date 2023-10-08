@@ -13,10 +13,18 @@ export const MenuScene = () => {
   return (
     <>
       <MenuPlayer />
-      <MenuAstroid color="#ef4444" position={[5, 5, -10]} />
-      <MenuAstroid color="#10b981" position={[8, 4, -12]} />
-      <MenuAstroid color="gray" position={[-6, 3, -4]} />
-      <MenuAstroid color="orange" position={[-4, -2, 3]} />
+      <MenuAstroid
+        color="#ef4444"
+        position={[5, 5, -10]}
+        rotation={[5, 5, -10]}
+      />
+      <MenuAstroid
+        color="#10b981"
+        position={[8, 4, -12]}
+        rotation={[8, 4, -12]}
+      />
+      <MenuAstroid color="gray" position={[-6, 3, -4]} rotation={[-6, 3, -4]} />
+      <MenuAstroid color="orange" position={[-4, -2, 3]} rotation={[0, 0, 0]} />
       <MenuCamera />
     </>
   )
@@ -80,9 +88,11 @@ const MenuPlayer = () => {
 const MenuAstroid = ({
   color = 'gray',
   position,
+  rotation,
 }: {
   color?: string
   position: [number, number, number]
+  rotation: [number, number, number]
 }) => {
   const gltf = useGLTF('/models/asteroid03.gltf')
   const ref = useRef<Mesh>()
@@ -102,7 +112,7 @@ const MenuAstroid = ({
   })
   return (
     <>
-      <group position={position}>
+      <group position={position} rotation={rotation}>
         <Float enabled speed={3} floatIntensity={3}>
           <primitive object={gltf.scene.clone()} ref={ref} />
         </Float>
