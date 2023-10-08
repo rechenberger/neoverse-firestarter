@@ -10,7 +10,7 @@ const Galaxy = dynamic(() => import('@/components/3d/Galaxy'), {
 export default function Page() {
   return (
     <>
-      <div className="relative h-screen">
+      <div className="relative h-[100svh]">
         <Suspense>
           <Galaxy />
         </Suspense>
