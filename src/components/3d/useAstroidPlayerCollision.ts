@@ -3,6 +3,7 @@ import { useEntities } from 'miniplex-react'
 import { useCallback } from 'react'
 import { Vector3 } from 'three'
 import { changeHealth } from './changeHealth'
+import { metaState } from './metaState'
 import { endGame } from './startGame'
 import { ECS, Entity, world } from './world'
 
@@ -19,15 +20,16 @@ export const useAstroidPlayerCollision = () => {
       if (!player.sceneObject) return
 
       if (eAstroid.health) {
-        changeHealth(eAstroid, -10)
+        changeHealth(eAstroid, -1 * metaState.stats.drillDamage)
+        const damageToPlayer = Math.max(10 - metaState.stats.armor, 0)
+        changeHealth(player, -1 * damageToPlayer)
+        if (player.health && player.health.current <= 0) {
+          endGame({ success: false })
+        }
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
-          changeHealth(player, 10)
+          changeHealth(player, metaState.stats.regain)
         } else {
-          changeHealth(player, -10)
-          if (player.health && player.health.current <= 0) {
-            endGame({ success: false })
-          }
           player.sceneObject.getWorldPosition(tmpVec3)
           let direction = tmpVec3.clone()
           eAstroid?.sceneObject?.getWorldPosition(tmpVec3)
