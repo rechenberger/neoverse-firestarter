@@ -26,8 +26,11 @@ const MenuCamera = () => {
     <>
       <CameraControls
         distance={12}
+        minDistance={12}
+        maxDistance={12}
         ref={ref}
-        // polarAngle={0}
+        polarAngle={Math.PI / 2}
+        azimuthAngle={0}
         enabled
         makeDefault
       />
