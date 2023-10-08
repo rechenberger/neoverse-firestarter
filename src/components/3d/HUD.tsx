@@ -1,4 +1,6 @@
+import { cn } from '@/lib/utils'
 import { useEntities } from 'miniplex-react'
+import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
@@ -17,6 +19,7 @@ export const HUD = () => {
       {!!player && <HudPlayer player={player} />}
       <StartButton />
       <EndOfGameDialog />
+      <HudTitle />
     </>
   )
 }
@@ -43,7 +46,7 @@ const StartButton = () => {
   if (mode !== 'menu') return null
   return (
     <>
-      <div className="absolute inset-x-0 flex flex-col items-center bottom-1/4 ">
+      <div className="absolute inset-x-0 flex flex-col items-center bottom-24 ">
         <Button
           size="lg"
           onClick={() => {
@@ -76,6 +79,39 @@ const EndOfGameDialog = () => {
           <Button onClick={() => (metaState.endOfGame = null)}>OK</Button>
         </DialogContent>
       </Dialog>
+    </>
+  )
+}
+
+const HudTitle = () => {
+  const [init, setInit] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setInit(true)
+    }, 500)
+  })
+  return (
+    <>
+      <div className="absolute top-24 inset-x-0 flex flex-col items-center">
+        <div>
+          <div
+            className={cn(
+              'text-6xl tracking-tighter font-extralight transition-all duration-1000 opacity-0',
+              init && 'opacity-100',
+            )}
+          >
+            neoverse
+          </div>
+          <div
+            className={cn(
+              'text-3xl uppercase font-extrabold italic text-primary transition-all duration-500 opacity-0 delay-500',
+              init && 'translate-x-12 opacity-100',
+            )}
+          >
+            Firestarter
+          </div>
+        </div>
+      </div>
     </>
   )
 }
