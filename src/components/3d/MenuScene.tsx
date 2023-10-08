@@ -1,5 +1,11 @@
-import { CameraControls, Float, useGLTF } from '@react-three/drei'
+import {
+  CameraControls,
+  Float,
+  useAnimations,
+  useGLTF,
+} from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { CapsuleCollider } from '@react-three/rapier'
 import { useEffect, useMemo, useRef } from 'react'
 import { Color, Mesh, MeshStandardMaterial } from 'three'
 
@@ -39,16 +45,27 @@ const MenuCamera = () => {
 }
 
 const MenuPlayer = () => {
-  const gltf = useGLTF('/models/spaceship25.gltf')
+  const gltf = useGLTF('/models/rocketFlying.gltf')
   const ref = useRef<THREE.Group | null>(null)
 
-  useFrame((_, dt) => {
-    ref.current?.rotateZ(dt * -0.2)
-  })
+  // useFrame((_, dt) => {
+  //   ref.current?.rotateZ(dt * -0.2)
+  // })
+
+  const { actions, mixer } = useAnimations(gltf.animations, gltf.scene)
+  useEffect(() => {
+    actions?.Animation?.setEffectiveTimeScale(0.5).play()
+    return () => {
+      actions?.Animation?.stop()
+    }
+  }, [actions?.Animation, mixer])
 
   return (
     <group ref={ref} rotation={[Math.PI * -0.4, Math.PI * 0, Math.PI * -1.2]}>
-      <primitive object={gltf.scene} />
+      <CapsuleCollider args={[1.5, 1]} position={[0, 1, 0]} />
+      <group rotation={[0, 0, Math.PI]} scale={5}>
+        <primitive object={gltf.scene} />
+      </group>
       <pointLight
         intensity={200}
         // distance={10 ** 10}
