@@ -17,7 +17,7 @@ export const useAstroidPlayerCollision = () => {
       if (!player.sceneObject) return
 
       if (eAstroid.health) {
-        eAstroid.health.current -= 5
+        eAstroid.health.current -= 10
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
         } else {

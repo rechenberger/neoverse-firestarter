@@ -63,8 +63,14 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
 
       for (let layer = 0; layer < layers; layer++) {
         let color = 'gray'
-        if (layer <= 6) color = '#dc2626'
-        if (layer <= 2) color = '#eab308'
+        let health = 10
+        if (layer <= 2) {
+          color = '#eab308'
+          health *= 4
+        } else if (layer <= 6) {
+          color = '#dc2626'
+          health *= 2
+        }
         const radius = minRadius + layer * size
         const circumference = 2 * Math.PI * radius
         const fitInCircumference = Math.floor(circumference / size)
@@ -83,7 +89,7 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
               color,
             },
             health: {
-              current: 10,
+              current: health,
             },
           })
         }
@@ -96,7 +102,7 @@ const useLotsOfAsteroidsAndAlsoCleanThemUp = () => {
           color: 'white',
         },
         health: {
-          current: 250 * 10,
+          current: 80,
         },
       })
     })
