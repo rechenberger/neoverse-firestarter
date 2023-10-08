@@ -1,4 +1,5 @@
 import { Vector3 } from 'three'
+import { proxy } from 'valtio'
 import { metaState } from './metaState'
 import { ECS, world } from './world'
 
@@ -15,6 +16,10 @@ export const startGame = () => {
     player: {
       spawnPosition: new Vector3(0, 120, 0),
     },
+    health: proxy({
+      current: metaState.stats.health,
+      max: metaState.stats.health,
+    }),
   })
 }
 

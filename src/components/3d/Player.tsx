@@ -3,7 +3,6 @@ import { ConvexHullCollider, RigidBody } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { Mesh } from 'three'
 import { GLTFLoader } from 'three-stdlib'
-import { proxy } from 'valtio'
 import { ForkedECSComponent } from './ForkedComponent'
 import { ECS } from './world'
 
@@ -19,13 +18,6 @@ export const Player = () => {
             name="player"
             data={{ spawnPosition: new Vector3(0, 120, 0) }}
           /> */}
-          <ECS.Component
-            name="health"
-            data={proxy({
-              current: 100,
-              max: 100,
-            })}
-          />
           <ForkedECSComponent name="rigidBody">
             <RigidBody
               position={entity.player?.spawnPosition || [0, 120, 0]}

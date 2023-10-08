@@ -1,6 +1,6 @@
 import { CameraControls, Float, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Color, Mesh, MeshStandardMaterial } from 'three'
 
 export const MenuScene = () => {
@@ -11,8 +11,22 @@ export const MenuScene = () => {
       <MenuAstroid color="#10b981" position={[8, 4, -12]} />
       <MenuAstroid color="gray" position={[-6, 3, -4]} />
       <MenuAstroid color="orange" position={[-4, -2, 3]} />
+      <MenuCamera />
+    </>
+  )
+}
+
+const MenuCamera = () => {
+  const ref = useRef<CameraControls | null>(null)
+  useEffect(() => {
+    ref.current?.camera.up.set(0, 1, 0)
+    ref.current?.updateCameraUp()
+  }, [])
+  return (
+    <>
       <CameraControls
         distance={12}
+        ref={ref}
         // polarAngle={0}
         enabled
         makeDefault
