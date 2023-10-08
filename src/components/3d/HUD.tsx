@@ -2,6 +2,7 @@ import { useEntities } from 'miniplex-react'
 import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { metaState } from './metastate'
+import { startGame } from './startGame'
 import { Entity, world } from './world'
 
 export const playerQuery = world.with('player', 'health')
@@ -36,7 +37,10 @@ const StartButton = () => {
       <div className="absolute inset-x-0 flex flex-col items-center bottom-1/4 ">
         <Button
           size="lg"
-          onClick={() => (metaState.mode = 'gameplay')}
+          onClick={() => {
+            startGame()
+            metaState.mode = 'gameplay'
+          }}
           className="ring ring-white ring-offset-4 text-3xl italic font-extrabold py-8 px-16"
         >
           START

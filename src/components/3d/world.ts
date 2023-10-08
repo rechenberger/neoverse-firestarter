@@ -13,7 +13,9 @@ export type Entity = {
     scale: number
     color: string
   }
-  player?: true
+  player?: {
+    spawnPosition?: Vector3
+  }
 
   sceneObject?: Object3D
   rigidBody?: RapierRigidBody

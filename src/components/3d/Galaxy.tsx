@@ -31,7 +31,7 @@ export const Galaxy = () => {
           debug={DEBUG}
           paused={isPaused}
         >
-          <Camera />
+          {!isPaused && <Camera />}
           <GalaxyEnvironment />
           <Player />
           <Asteroids />
