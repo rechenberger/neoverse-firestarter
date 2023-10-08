@@ -2,7 +2,7 @@ import { useAnimations } from '@react-three/drei'
 import { useLoader } from '@react-three/fiber'
 import { CapsuleCollider, RigidBody } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { GLTFLoader } from 'three-stdlib'
 import { ForkedECSComponent } from './ForkedComponent'
 import { ECS } from './world'
@@ -11,7 +11,11 @@ export const Player = () => {
   const gltf = useLoader(GLTFLoader, '/models/rocketFlying.gltf')
   const entities = useEntities(ECS.world.with('player'))
 
-  const { actions, mixer } = useAnimations(gltf.animations, gltf.scene)
+  const scene = useMemo(() => {
+    return gltf.scene.clone()
+  }, [gltf.scene])
+
+  const { actions, mixer } = useAnimations(gltf.animations, scene)
   useEffect(() => {
     actions?.Animation?.setEffectiveTimeScale(0.5).play()
     return () => {
@@ -47,7 +51,7 @@ export const Player = () => {
                     mass={5}
                   />
                   <group scale={10} rotation={[0, 0, Math.PI]}>
-                    <primitive object={gltf.scene} />
+                    <primitive object={scene} />
                   </group>
                   <pointLight
                     intensity={200}
