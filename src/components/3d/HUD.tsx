@@ -6,6 +6,7 @@ import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { Progress } from '../ui/progress'
+import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
 import { Entity, world } from './world'
@@ -24,6 +25,7 @@ export const HUD = () => {
         <>
           <StartButton />
           <HudTitle />
+          <UpgradeMenu />
         </>
       )}
     </>
@@ -55,7 +57,7 @@ const StartButton = () => {
     }, 2000)
   })
   const hasUpgrade = false
-  const canUpgrade = false
+  const canUpgrade = true
   const showUpgrade = hasUpgrade || canUpgrade
   return (
     <>
@@ -78,6 +80,9 @@ const StartButton = () => {
                 className={cn(
                   'text-lg font-bold py-2 px-4 uppercase flex flex-row gap-2 relative w-full',
                 )}
+                onClick={() => {
+                  upgradeMenuState.open = true
+                }}
               >
                 {canUpgrade && (
                   <span className="absolute -top-1 -right-1 flex h-3 w-3">
