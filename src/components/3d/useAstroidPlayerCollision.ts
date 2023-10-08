@@ -20,7 +20,13 @@ export const useAstroidPlayerCollision = () => {
         eAstroid.health.current -= 10
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
+          if (player.health) {
+            player.health.current += 10
+          }
         } else {
+          if (player.health) {
+            player.health.current -= 10
+          }
           player.sceneObject.getWorldPosition(tmpVec3)
           let direction = tmpVec3.clone()
           eAstroid?.sceneObject?.getWorldPosition(tmpVec3)

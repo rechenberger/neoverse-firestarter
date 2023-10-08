@@ -13,7 +13,6 @@ const DEBUG = false
 export const Galaxy = () => {
   return (
     <>
-      <DeviceOrientationDialog />
       <Canvas className="bg-gradient-to-tr from-black to-black bg-blend-darken flex-1">
         <Stats />
         <Physics
@@ -29,6 +28,8 @@ export const Galaxy = () => {
           <Systems />
         </Physics>
       </Canvas>
+      <DeviceOrientationDialog />
+      {/* <HUD /> */}
     </>
   )
 }
