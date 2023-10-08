@@ -7,6 +7,7 @@ import { Camera } from './Camera'
 import { DeviceOrientationDialog } from './DeviceOrientationDialog'
 import { GalaxyEnvironment } from './GalaxyEnvironment'
 import { HUD } from './HUD'
+import { MenuScene } from './MenuScene'
 import { Player } from './Player'
 import { Systems } from './Systems'
 import { metaState } from './metaState'
@@ -32,6 +33,7 @@ export const Galaxy = () => {
           paused={isPaused}
         >
           {!isPaused && <Camera />}
+          {isPaused && <MenuScene />}
           <GalaxyEnvironment />
           <Player />
           <Asteroids />
