@@ -2,6 +2,7 @@ import { CollisionEnterPayload } from '@react-three/rapier'
 import { useEntities } from 'miniplex-react'
 import { useCallback } from 'react'
 import { Vector3 } from 'three'
+import { changeHealth } from './entityActions'
 import { ECS, Entity, world } from './world'
 
 const tmpVec3 = new Vector3()
@@ -17,16 +18,12 @@ export const useAstroidPlayerCollision = () => {
       if (!player.sceneObject) return
 
       if (eAstroid.health) {
-        eAstroid.health.current -= 10
+        changeHealth(eAstroid, -10)
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
-          if (player.health) {
-            player.health.current += 10
-          }
+          changeHealth(player, 10)
         } else {
-          if (player.health) {
-            player.health.current -= 10
-          }
+          changeHealth(player, -10)
           player.sceneObject.getWorldPosition(tmpVec3)
           let direction = tmpVec3.clone()
           eAstroid?.sceneObject?.getWorldPosition(tmpVec3)
