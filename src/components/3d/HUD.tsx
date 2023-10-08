@@ -14,12 +14,17 @@ export const playerQuery = world.with('player', 'health')
 export const HUD = () => {
   const players = useEntities(playerQuery)
   const player = players.entities?.[0]
+  const { mode } = useSnapshot(metaState)
   return (
     <>
       {!!player && <HudPlayer player={player} />}
-      <StartButton />
       <EndOfGameDialog />
-      <HudTitle />
+      {mode === 'menu' && (
+        <>
+          <StartButton />
+          <HudTitle />
+        </>
+      )}
     </>
   )
 }
@@ -42,18 +47,29 @@ const HudPlayer = ({ player }: { player: Entity }) => {
 }
 
 const StartButton = () => {
-  const { mode } = useSnapshot(metaState)
-  if (mode !== 'menu') return null
+  const [init, setInit] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setInit(true)
+    }, 2000)
+  })
   return (
     <>
-      <div className="absolute inset-x-0 flex flex-col items-center bottom-24 ">
+      <div
+        className={cn(
+          'absolute inset-x-0 flex flex-col items-center bottom-24',
+          'transition-all duration-1000 opacity-0',
+          init && 'opacity-100',
+        )}
+      >
         <Button
+          variant="outline"
           size="lg"
           onClick={() => {
             startGame()
             metaState.mode = 'gameplay'
           }}
-          className="ring ring-white ring-offset-4 text-3xl italic font-extrabold py-8 px-16"
+          className="text-3xl italic font-extrabold py-8 px-16"
         >
           START
         </Button>
