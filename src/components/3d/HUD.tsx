@@ -1,7 +1,8 @@
 import { useEntities } from 'miniplex-react'
 import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
-import { metaState } from './metastate'
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import { metaState } from './metaState'
 import { startGame } from './startGame'
 import { Entity, world } from './world'
 
@@ -14,6 +15,7 @@ export const HUD = () => {
     <>
       {!!player && <HudPlayer player={player} />}
       <StartButton />
+      <EndOfGameDialog />
     </>
   )
 }
@@ -46,6 +48,27 @@ const StartButton = () => {
           START
         </Button>
       </div>
+    </>
+  )
+}
+
+const EndOfGameDialog = () => {
+  const { endOfGame } = useSnapshot(metaState)
+  if (!endOfGame) return null
+  const title = endOfGame.success ? 'You Win!' : 'Game over'
+  return (
+    <>
+      <Dialog
+        open
+        onOpenChange={(open) => {
+          if (!open) metaState.endOfGame = null
+        }}
+      >
+        <DialogContent>
+          <DialogTitle>{title}</DialogTitle>
+          <Button onClick={() => (metaState.endOfGame = null)}>OK</Button>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

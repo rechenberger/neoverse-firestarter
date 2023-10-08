@@ -1,5 +1,12 @@
 import { Vector3 } from 'three'
+import { metaState } from './metaState'
 import { ECS, world } from './world'
+
+export const endGame = (endOfGame: { success: boolean }) => {
+  world.clear()
+  metaState.endOfGame = endOfGame
+  metaState.mode = 'menu'
+}
 
 export const startGame = () => {
   world.clear()

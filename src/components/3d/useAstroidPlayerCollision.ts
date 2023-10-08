@@ -3,6 +3,7 @@ import { useEntities } from 'miniplex-react'
 import { useCallback } from 'react'
 import { Vector3 } from 'three'
 import { changeHealth } from './changeHealth'
+import { endGame } from './startGame'
 import { ECS, Entity, world } from './world'
 
 const tmpVec3 = new Vector3()
@@ -24,6 +25,9 @@ export const useAstroidPlayerCollision = () => {
           changeHealth(player, 10)
         } else {
           changeHealth(player, -10)
+          if (player.health && player.health.current <= 0) {
+            endGame({ success: false })
+          }
           player.sceneObject.getWorldPosition(tmpVec3)
           let direction = tmpVec3.clone()
           eAstroid?.sceneObject?.getWorldPosition(tmpVec3)

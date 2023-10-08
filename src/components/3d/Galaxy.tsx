@@ -9,7 +9,7 @@ import { GalaxyEnvironment } from './GalaxyEnvironment'
 import { HUD } from './HUD'
 import { Player } from './Player'
 import { Systems } from './Systems'
-import { metaState } from './metastate'
+import { metaState } from './metaState'
 
 const DEBUG = false
 
