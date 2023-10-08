@@ -2,6 +2,7 @@ import { useLoader } from '@react-three/fiber'
 import { ConvexHullCollider, RigidBody } from '@react-three/rapier'
 import { Mesh } from 'three'
 import { GLTFLoader } from 'three-stdlib'
+import { proxy } from 'valtio'
 import { ForkedECSComponent } from './ForkedComponent'
 import { ECS } from './world'
 
@@ -13,10 +14,10 @@ export const Player = () => {
       <ECS.Component name="player" data={true} />
       <ECS.Component
         name="health"
-        data={{
+        data={proxy({
           current: 100,
           max: 100,
-        }}
+        })}
       />
       <ForkedECSComponent name="rigidBody">
         <RigidBody

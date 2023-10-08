@@ -5,6 +5,7 @@ import { Asteroids } from './Asteroids'
 import { Camera } from './Camera'
 import { DeviceOrientationDialog } from './DeviceOrientationDialog'
 import { GalaxyEnvironment } from './GalaxyEnvironment'
+import { HUD } from './HUD'
 import { Player } from './Player'
 import { Systems } from './Systems'
 
@@ -29,7 +30,7 @@ export const Galaxy = () => {
         </Physics>
       </Canvas>
       <DeviceOrientationDialog />
-      {/* <HUD /> */}
+      <HUD />
     </>
   )
 }
