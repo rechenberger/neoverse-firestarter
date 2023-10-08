@@ -46,15 +46,19 @@ export const UpgradeMenu = () => {
           </div>
           <div className="h-2" />
           <SheetTitle>Upgrades</SheetTitle>
-          <div className="grid gap-2 grid-cols-2">
-            <Card className="flex flex-col items-center gap-0 p-2">
-              <div className="font-bold">Health</div>
-              <div className="text-sm opacity-60">Level 4/10</div>
-              <Heart className="w-8 h-8 my-4" />
+          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
+            <Card className="flex flex-col items-stretch gap-2 px-2 py-1">
+              <div className="flex flex-row gap-2 items-center">
+                <div className="flex-1">
+                  <div className="font-bold">Health</div>
+                  <div className="text-sm opacity-60">Level 4/10</div>
+                </div>
+                <Heart className="w-8 h-8 opacity-60" />
+              </div>
               <Button
                 variant={'secondary'}
                 disabled
-                className="p-2 flex flex-col gap-1 h-auto items-stretch"
+                className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch"
               >
                 <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
                   <div className="h-3 w-3 rounded-full bg-neutral-500" />
@@ -65,11 +69,15 @@ export const UpgradeMenu = () => {
                 </Card>
               </Button>
             </Card>
-            <Card className="flex flex-col items-center gap-0 p-2">
-              <div className="font-bold">Shield</div>
-              <div className="text-sm opacity-60">Level 0/10</div>
-              <Shield className="w-8 h-8 my-4" />
-              <Button className="p-2 flex flex-col gap-1 h-auto items-stretch">
+            <Card className="flex flex-col items-stretch gap-2 px-2 py-1">
+              <div className="flex flex-row gap-2 items-center">
+                <div className="flex-1">
+                  <div className="font-bold">Shield</div>
+                  <div className="text-sm opacity-60">Level 0/10</div>
+                </div>
+                <Shield className="w-8 h-8 opacity-60" />
+              </div>
+              <Button className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch">
                 <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
                   <div className="h-3 w-3 rounded-full bg-yellow-500" />
                   <div>
