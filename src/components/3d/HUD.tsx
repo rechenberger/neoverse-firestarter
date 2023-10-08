@@ -29,10 +29,18 @@ const HudPlayer = ({ player }: { player: Entity }) => {
 }
 
 const StartButton = () => {
+  const { mode } = useSnapshot(metaState)
+  if (mode !== 'menu') return null
   return (
     <>
-      <div className="absolute bottom-4 right-4">
-        <Button onClick={() => (metaState.mode = 'gameplay')}>Start</Button>
+      <div className="absolute inset-x-0 flex flex-col items-center bottom-1/4 ">
+        <Button
+          size="lg"
+          onClick={() => (metaState.mode = 'gameplay')}
+          className="ring ring-white ring-offset-4 text-3xl italic font-extrabold py-8 px-16"
+        >
+          START
+        </Button>
       </div>
     </>
   )
