@@ -22,6 +22,7 @@ export const Player = () => {
       <ForkedECSComponent name="rigidBody">
         <RigidBody
           position={[0, 120, 0]}
+          rotation={[0, 0, Math.PI]}
           angularDamping={3}
           linearDamping={1}
           enabledTranslations={[true, true, false]}
