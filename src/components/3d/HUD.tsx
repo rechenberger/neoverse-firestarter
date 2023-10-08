@@ -63,7 +63,7 @@ const StartButton = () => {
     <>
       <div
         className={cn(
-          'absolute inset-x-0 flex flex-col items-center bottom-24',
+          'absolute inset-x-0 flex flex-col items-center bottom-16',
         )}
       >
         <div className="flex flex-col gap-2">
@@ -151,7 +151,7 @@ const HudTitle = () => {
   })
   return (
     <>
-      <div className="absolute top-24 inset-x-0 flex flex-col items-center">
+      <div className="absolute top-16 inset-x-0 flex flex-col items-center">
         <div>
           <div
             className={cn(
