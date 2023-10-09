@@ -1,3 +1,5 @@
+import { indexOf, orderBy } from 'lodash-es'
+
 export type ResourceType = 'iron' | 'silicone' | 'aluminum'
 
 type ResourceDefinition = {
@@ -26,3 +28,17 @@ export const allResourceDefinitions = allResourceTypes.map((type) => ({
 }))
 
 export type ResourceMap = Partial<Record<ResourceType, number>>
+
+export const displayResourceMap = (resourceMap: ResourceMap) => {
+  let entries = Object.entries(resourceMap).map(([t, amount]) => {
+    const type = t as ResourceType
+    const definition = resourceDefinitions[type]
+    return {
+      type,
+      definition,
+      amount,
+    }
+  })
+  entries = orderBy(entries, (e) => indexOf(allResourceTypes, e.type), 'asc')
+  return entries
+}

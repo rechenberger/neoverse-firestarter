@@ -1,7 +1,6 @@
-import { map } from 'lodash-es'
 import { Fragment } from 'react'
 import { proxy, useSnapshot } from 'valtio'
-import { ResourceType, resourceDefinitions } from '../statics/resources'
+import { displayResourceMap } from '../statics/resources'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
@@ -28,20 +27,19 @@ export const UpgradeMenu = () => {
         >
           <SheetTitle>Resources</SheetTitle>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
-            {map(resources, (amount: number, type: ResourceType) => {
-              const resourceDefinition = resourceDefinitions[type]
+            {displayResourceMap(resources).map((resource) => {
               return (
-                <Fragment key={type}>
+                <Fragment key={resource.type}>
                   <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
                     <div
                       className="h-3 w-3 rounded-full"
                       style={{
-                        backgroundColor: resourceDefinition.color,
+                        backgroundColor: resource.definition.color,
                       }}
                     />
                     <div>
-                      <strong>{amount}</strong>
-                      <span className="capitalize">&nbsp;{type}</span>
+                      <strong>{resource.amount}</strong>
+                      <span className="capitalize">&nbsp;{resource.type}</span>
                     </div>
                   </Card>
                 </Fragment>
@@ -77,30 +75,26 @@ export const UpgradeMenu = () => {
                       variant={upgrade.canUpgrade ? 'default' : 'secondary'}
                       onClick={() => upgrade.doUpgrade()}
                     >
-                      {map(
-                        upgrade.costs,
-                        (amount: number, type: ResourceType) => {
-                          const resourceDefinition = resourceDefinitions[type]
-                          return (
-                            <Fragment key={type}>
-                              <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-                                <div
-                                  className="h-3 w-3 rounded-full"
-                                  style={{
-                                    backgroundColor: resourceDefinition.color,
-                                  }}
-                                />
-                                <div>
-                                  <strong>{amount}</strong>
-                                  <span className="capitalize">
-                                    &nbsp;{type}
-                                  </span>
-                                </div>
-                              </Card>
-                            </Fragment>
-                          )
-                        },
-                      )}
+                      {displayResourceMap(upgrade.costs).map((resource) => {
+                        return (
+                          <Fragment key={resource.type}>
+                            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
+                              <div
+                                className="h-3 w-3 rounded-full"
+                                style={{
+                                  backgroundColor: resource.definition.color,
+                                }}
+                              />
+                              <div>
+                                <strong>{resource.amount}</strong>
+                                <span className="capitalize">
+                                  &nbsp;{resource.type}
+                                </span>
+                              </div>
+                            </Card>
+                          </Fragment>
+                        )
+                      })}
                     </Button>
                   </Card>
                 </Fragment>
