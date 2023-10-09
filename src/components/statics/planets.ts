@@ -1,5 +1,6 @@
 import { indexOf, orderBy } from 'lodash-es'
 import { ResourceType } from './resources'
+import { UpgradeMap } from './upgrades'
 
 export type PlanetType = 'earth' | 'moon'
 
@@ -11,6 +12,7 @@ type PlanetDefinition = {
     resourceAmount: number
     health: number
   }[]
+  prerequisites?: UpgradeMap
 }
 
 export const planetDefinitions: Record<PlanetType, PlanetDefinition> = {
