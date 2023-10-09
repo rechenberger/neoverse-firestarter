@@ -9,6 +9,7 @@ import { Progress } from '../ui/progress'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
+import { useCanUpgradeAny, useHasUpgradeAny } from './useUpgrades'
 import { Entity, world } from './world'
 
 export const playerQuery = world.with('player', 'health')
@@ -56,8 +57,8 @@ const StartButton = () => {
       setInit(true)
     }, 2000)
   })
-  const hasUpgrade = false
-  const canUpgrade = true
+  const hasUpgrade = useHasUpgradeAny()
+  const canUpgrade = useCanUpgradeAny()
   const showUpgrade = hasUpgrade || canUpgrade
   return (
     <>

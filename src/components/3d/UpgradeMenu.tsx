@@ -2,11 +2,11 @@ import { map } from 'lodash-es'
 import { Fragment } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import { ResourceType, resourceDefinitions } from '../statics/resources'
-import { allUpgradeDefinitions } from '../statics/upgrades'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
 import { metaState } from './metaState'
+import { useUpgrades } from './useUpgrades'
 
 export const upgradeMenuState = proxy({
   open: false,
@@ -14,7 +14,8 @@ export const upgradeMenuState = proxy({
 
 export const UpgradeMenu = () => {
   const state = useSnapshot(upgradeMenuState)
-  const { resources, upgrades } = useSnapshot(metaState)
+  const { resources } = useSnapshot(metaState)
+  const upgrades = useUpgrades()
   return (
     <>
       <Sheet
@@ -50,65 +51,56 @@ export const UpgradeMenu = () => {
           <div className="h-2" />
           <SheetTitle>Upgrades</SheetTitle>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
-            {allUpgradeDefinitions.map((upgradeDefinition) => {
-              const upgradeLevel = upgrades[upgradeDefinition.type] || 0
-              const costs = upgradeDefinition.getCosts({ level: upgradeLevel })
-              const canUpgrade = Object.entries(costs).every(
-                ([type, amount]) =>
-                  (resources[type as ResourceType] || 0) >= amount,
-              )
-              const doUpgrade = () => {
-                if (!canUpgrade) return
-                Object.entries(costs).forEach(([type, amount]) => {
-                  metaState.resources[type as ResourceType]! -= amount
-                })
-                metaState.upgrades[upgradeDefinition.type] =
-                  (metaState.upgrades[upgradeDefinition.type] || 0) + 1
-              }
+            {upgrades.map((upgrade) => {
               return (
-                <Fragment key={upgradeDefinition.type}>
+                <Fragment key={upgrade.type}>
                   <Card className="flex flex-col items-stretch gap-2 px-2 py-1">
                     <div className="flex flex-row gap-2 items-center">
                       <div className="flex-1">
                         <div className="flex flex-row">
                           <div className="font-bold capitalize flex-1">
-                            {upgradeDefinition.type}
+                            {upgrade.type}
                           </div>
                           <div className="text-sm opacity-60">
-                            {upgradeLevel}/{upgradeDefinition.maxLevel}
+                            {upgrade.level}/{upgrade.maxLevel}
                           </div>
                         </div>
                         <div className="text-sm opacity-60">
-                          {upgradeDefinition.description}
+                          {upgrade.description}
                         </div>
                       </div>
                       {/* <Shield className="w-8 h-8 opacity-60" /> */}
                     </div>
                     <Button
                       className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch"
-                      disabled={!canUpgrade}
-                      variant={canUpgrade ? 'default' : 'secondary'}
-                      onClick={() => doUpgrade()}
+                      disabled={!upgrade.canUpgrade}
+                      variant={upgrade.canUpgrade ? 'default' : 'secondary'}
+                      onClick={() => upgrade.doUpgrade()}
                     >
-                      {map(costs, (amount: number, type: ResourceType) => {
-                        const resourceDefinition = resourceDefinitions[type]
-                        return (
-                          <Fragment key={type}>
-                            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-                              <div
-                                className="h-3 w-3 rounded-full"
-                                style={{
-                                  backgroundColor: resourceDefinition.color,
-                                }}
-                              />
-                              <div>
-                                <strong>{amount}</strong>
-                                <span className="capitalize">&nbsp;{type}</span>
-                              </div>
-                            </Card>
-                          </Fragment>
-                        )
-                      })}
+                      {map(
+                        upgrade.costs,
+                        (amount: number, type: ResourceType) => {
+                          const resourceDefinition = resourceDefinitions[type]
+                          return (
+                            <Fragment key={type}>
+                              <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
+                                <div
+                                  className="h-3 w-3 rounded-full"
+                                  style={{
+                                    backgroundColor: resourceDefinition.color,
+                                  }}
+                                />
+                                <div>
+                                  <strong>{amount}</strong>
+                                  <span className="capitalize">
+                                    &nbsp;{type}
+                                  </span>
+                                </div>
+                              </Card>
+                            </Fragment>
+                          )
+                        },
+                      )}
                     </Button>
                   </Card>
                 </Fragment>
