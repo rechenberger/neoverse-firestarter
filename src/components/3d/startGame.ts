@@ -1,4 +1,4 @@
-import { reverse, sumBy } from 'lodash-es'
+import { reverse } from 'lodash-es'
 import { Vector3 } from 'three'
 import { proxy } from 'valtio'
 import { PlanetType, planetDefinitions } from '../statics/planets'
@@ -45,14 +45,14 @@ export const updateStats = () => {
 
 const spawnAsteroids = ({ planetType }: { planetType: PlanetType }) => {
   const planet = planetDefinitions[planetType]
-  const noOfLayers = sumBy(planet.layers, (l) => l.size)
+
   const size = 6
   const maxScale = size / 3
   const minScale = maxScale * 0.6
   const minRadius = 30
 
   let absoluteLayerIdx = -1
-  for (const layer of reverse(planet.layers)) {
+  for (const layer of reverse([...planet.layers])) {
     for (let subLayerIdx = 0; subLayerIdx < layer.size; subLayerIdx++) {
       absoluteLayerIdx++
       const resource = resourceDefinitions[layer.resourceType]
