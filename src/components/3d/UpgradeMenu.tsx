@@ -39,8 +39,8 @@ export const UpgradeMenu = () => {
                     <div className="flex flex-row gap-2 items-center">
                       <div className="flex-1">
                         <div className="flex flex-row">
-                          <div className="font-bold capitalize flex-1">
-                            {upgrade.type}
+                          <div className="font-bold flex-1">
+                            {upgrade.title}
                           </div>
                           <div className="text-sm opacity-60">
                             {upgrade.level}/{upgrade.maxLevel}
