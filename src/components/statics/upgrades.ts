@@ -1,7 +1,7 @@
 import { ResourceMap } from './resources'
 import { Stats } from './stats'
 
-export type UpgradeType = 'health' | 'drillDamage'
+export type UpgradeType = 'health' | 'drillDamage' | 'shield'
 
 type UpgradeDefinition = {
   title: string
@@ -9,6 +9,7 @@ type UpgradeDefinition = {
   getDescription: (level: number) => string
   getCosts: (options: { level: number }) => ResourceMap
   modifyStats: (options: { level: number; statsBefore: Stats }) => Stats
+  prerequisites?: UpgradeMap
 }
 
 export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
@@ -36,6 +37,21 @@ export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
       ...statsBefore,
       drillDamage: statsBefore.drillDamage + 10 * level,
     }),
+  },
+  shield: {
+    title: 'Heat Shield',
+    maxLevel: 10,
+    getDescription: (level) => `+${10 * level} Armor`,
+    getCosts: ({ level }) => ({
+      iron: 10 * 2 ** (level + 10),
+    }),
+    modifyStats: ({ level, statsBefore }) => ({
+      ...statsBefore,
+      armor: statsBefore.armor + 10 * level,
+    }),
+    prerequisites: {
+      health: 3,
+    },
   },
 }
 

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useSnapshot } from 'valtio'
 import { ResourceType } from '../statics/resources'
-import { allUpgradeDefinitions } from '../statics/upgrades'
+import { UpgradeType, allUpgradeDefinitions } from '../statics/upgrades'
 import { metaState } from './metaState'
 
 export const useUpgrades = () => {
@@ -12,9 +12,18 @@ export const useUpgrades = () => {
       allUpgradeDefinitions.map((upgradeDefinition) => {
         const upgradeLevel = upgrades[upgradeDefinition.type] || 0
         const costs = upgradeDefinition.getCosts({ level: upgradeLevel })
-        const canUpgrade = Object.entries(costs).every(
+
+        const hasPrerequisites = upgradeDefinition.prerequisites
+          ? Object.entries(upgradeDefinition.prerequisites).every(
+              ([type, level]) => (upgrades[type as UpgradeType] || 0) >= level,
+            )
+          : true
+        const canPay = Object.entries(costs).every(
           ([type, amount]) => (resources[type as ResourceType] || 0) >= amount,
         )
+        const canUpgrade = canPay && hasPrerequisites
+        const show = upgradeLevel > 0 || hasPrerequisites
+
         const doUpgrade = () => {
           if (!canUpgrade) return
           Object.entries(costs).forEach(([type, amount]) => {
@@ -23,11 +32,13 @@ export const useUpgrades = () => {
           metaState.upgrades[upgradeDefinition.type] =
             (metaState.upgrades[upgradeDefinition.type] || 0) + 1
         }
+
         return {
           ...upgradeDefinition,
           level: upgradeLevel,
           costs,
           canUpgrade,
+          show,
           doUpgrade,
         }
       }),

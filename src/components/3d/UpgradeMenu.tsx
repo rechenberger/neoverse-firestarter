@@ -34,6 +34,7 @@ export const UpgradeMenu = () => {
           <SheetTitle>Upgrades</SheetTitle>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
             {upgrades.map((upgrade) => {
+              if (!upgrade.show) return null
               return (
                 <Fragment key={upgrade.type}>
                   <Card className="flex flex-col items-stretch gap-2 px-2 py-1">
