@@ -1,6 +1,8 @@
+import { reverse, sumBy } from 'lodash-es'
 import { Vector3 } from 'three'
 import { proxy } from 'valtio'
-import { ResourceType, resourceDefinitions } from '../statics/resources'
+import { PlanetType, planetDefinitions } from '../statics/planets'
+import { resourceDefinitions } from '../statics/resources'
 import { baseStats } from '../statics/stats'
 import { allUpgradeDefinitions } from '../statics/upgrades'
 import { metaState } from './metaState'
@@ -14,7 +16,9 @@ export const endGame = (endOfGame: { success: boolean }) => {
 
 export const startGame = () => {
   world.clear()
-  spawnAsteroids()
+  spawnAsteroids({
+    planetType: metaState.selectedPlanet,
+  })
   updateStats()
   metaState.resourcesGathered = {}
   world.add({
@@ -39,48 +43,45 @@ export const updateStats = () => {
   metaState.stats = stats
 }
 
-const spawnAsteroids = () => {
-  const layers = 12
+const spawnAsteroids = ({ planetType }: { planetType: PlanetType }) => {
+  const planet = planetDefinitions[planetType]
+  const noOfLayers = sumBy(planet.layers, (l) => l.size)
   const size = 6
   const maxScale = size / 3
   const minScale = maxScale * 0.6
   const minRadius = 30
 
-  for (let layer = 0; layer < layers; layer++) {
-    let health = 10
-    let resourceType: ResourceType = 'iron'
-    if (layer <= 2) {
-      health *= 4
-      resourceType = 'aluminum'
-    } else if (layer <= 6) {
-      health *= 2
-      resourceType = 'silicone'
-    }
-    const resource = resourceDefinitions[resourceType]
+  let absoluteLayerIdx = -1
+  for (const layer of reverse(planet.layers)) {
+    for (let subLayerIdx = 0; subLayerIdx < layer.size; subLayerIdx++) {
+      absoluteLayerIdx++
+      const resource = resourceDefinitions[layer.resourceType]
 
-    const radius = minRadius + layer * size
-    const circumference = 2 * Math.PI * radius
-    const fitInCircumference = Math.floor(circumference / size)
-    for (let i = 0; i < fitInCircumference; i++) {
-      const angle = (i / fitInCircumference) * Math.PI * 2
-      const x = Math.cos(angle) * radius
-      const y = Math.sin(angle) * radius
+      const radius = minRadius + absoluteLayerIdx * size
+      const circumference = 2 * Math.PI * radius
+      const fitInCircumference = Math.floor(circumference / size)
 
-      const position = new Vector3(x, y, 0)
-      const scale = Math.random() * (maxScale - minScale) + minScale
+      for (let i = 0; i < fitInCircumference; i++) {
+        const angle = (i / fitInCircumference) * Math.PI * 2
+        const x = Math.cos(angle) * radius
+        const y = Math.sin(angle) * radius
 
-      ECS.world.add({
-        asteroid: {
-          spawnPosition: position,
-          scale,
-          color: resource.color,
-          resourceType,
-          resourceAmount: 1,
-        },
-        health: {
-          current: health,
-        },
-      })
+        const position = new Vector3(x, y, 0)
+        const scale = Math.random() * (maxScale - minScale) + minScale
+
+        ECS.world.add({
+          asteroid: {
+            spawnPosition: position,
+            scale,
+            color: resource.color,
+            resourceType: layer.resourceType,
+            resourceAmount: 1,
+          },
+          health: {
+            current: layer.health,
+          },
+        })
+      }
     }
   }
 

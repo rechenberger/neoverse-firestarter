@@ -30,7 +30,7 @@ export const planetDefinitions: Record<PlanetType, PlanetDefinition> = {
         health: 20,
       },
       {
-        size: 2,
+        size: 3,
         resourceType: 'aluminum',
         resourceAmount: 1,
         health: 40,
