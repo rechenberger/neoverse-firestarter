@@ -36,10 +36,10 @@ const spawnAsteroids = () => {
     let resourceType: ResourceType = 'iron'
     if (layer <= 2) {
       health *= 4
-      resourceType = 'silicone'
+      resourceType = 'aluminum'
     } else if (layer <= 6) {
       health *= 2
-      resourceType = 'aluminum'
+      resourceType = 'silicone'
     }
     const resource = resourceDefinitions[resourceType]
 
