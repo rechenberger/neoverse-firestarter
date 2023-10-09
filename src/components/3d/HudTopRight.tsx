@@ -34,7 +34,7 @@ export const HudTopRight = () => {
               <Music className="w-4 h-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent className="mx-4">
             <Label className="flex flex-row gap-4 items-center">
               <span className="flex-1">Music</span>
               <Switch
