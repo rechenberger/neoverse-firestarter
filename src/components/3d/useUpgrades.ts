@@ -21,7 +21,8 @@ export const useUpgrades = () => {
         const canPay = Object.entries(costs).every(
           ([type, amount]) => (resources[type as ResourceType] || 0) >= amount,
         )
-        const canUpgrade = canPay && hasPrerequisites
+        const isMaxed = upgradeLevel >= upgradeDefinition.maxLevel
+        const canUpgrade = canPay && hasPrerequisites && !isMaxed
         const show = upgradeLevel > 0 || hasPrerequisites
 
         const doUpgrade = () => {
@@ -36,6 +37,7 @@ export const useUpgrades = () => {
         return {
           ...upgradeDefinition,
           level: upgradeLevel,
+          isMaxed,
           costs,
           canUpgrade,
           show,

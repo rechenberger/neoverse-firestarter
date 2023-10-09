@@ -59,14 +59,16 @@ export const UpgradeMenu = () => {
                       </div>
                       {/* <Shield className="w-8 h-8 opacity-60" /> */}
                     </div>
-                    <Button
-                      className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch"
-                      disabled={!upgrade.canUpgrade}
-                      variant={upgrade.canUpgrade ? 'default' : 'secondary'}
-                      onClick={() => upgrade.doUpgrade()}
-                    >
-                      <ResourceList resources={upgrade.costs} />
-                    </Button>
+                    {!upgrade.isMaxed && (
+                      <Button
+                        className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch"
+                        disabled={!upgrade.canUpgrade}
+                        variant={upgrade.canUpgrade ? 'default' : 'secondary'}
+                        onClick={() => upgrade.doUpgrade()}
+                      >
+                        <ResourceList resources={upgrade.costs} />
+                      </Button>
+                    )}
                   </Card>
                 </Fragment>
               )
