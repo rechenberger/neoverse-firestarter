@@ -1,23 +1,13 @@
 import { proxy, subscribe } from 'valtio'
 import { ResourceMap } from '../statics/resources'
+import { baseStats } from '../statics/stats'
 import { UpgradeMap } from '../statics/upgrades'
-
-export type Stats = {
-  health: number
-  drillDamage: number
-  armor: number
-  regain: number
-}
+import { updateStats } from './startGame'
 
 export const metaState = proxy({
   mode: 'menu' as 'menu' | 'gameplay',
   endOfGame: null as { success: boolean } | null,
-  stats: {
-    health: 100,
-    drillDamage: 10,
-    armor: 5,
-    regain: 2,
-  } satisfies Stats,
+  stats: baseStats,
   resources: {} as ResourceMap,
   upgrades: {} as UpgradeMap,
 })
@@ -29,6 +19,7 @@ if (typeof window !== 'undefined') {
   metaState.upgrades = JSON.parse(
     localStorage.getItem('metaState.upgrades') || '{}',
   )
+  updateStats()
   subscribe(metaState, () => {
     localStorage.setItem(
       'metaState.resources',

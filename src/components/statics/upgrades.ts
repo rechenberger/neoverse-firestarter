@@ -1,5 +1,5 @@
-import { Stats } from '../3d/metaState'
 import { ResourceMap } from './resources'
+import { Stats } from './stats'
 
 export type UpgradeType = 'health' | 'drillDamage'
 

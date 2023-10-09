@@ -1,6 +1,8 @@
 import { Vector3 } from 'three'
 import { proxy } from 'valtio'
 import { ResourceType, resourceDefinitions } from '../statics/resources'
+import { baseStats } from '../statics/stats'
+import { allUpgradeDefinitions } from '../statics/upgrades'
 import { metaState } from './metaState'
 import { ECS, world } from './world'
 
@@ -13,6 +15,7 @@ export const endGame = (endOfGame: { success: boolean }) => {
 export const startGame = () => {
   world.clear()
   spawnAsteroids()
+  updateStats()
   world.add({
     player: {
       spawnPosition: new Vector3(0, 120, 0),
@@ -22,6 +25,17 @@ export const startGame = () => {
       max: metaState.stats.health,
     }),
   })
+}
+
+export const updateStats = () => {
+  let stats = { ...baseStats }
+  for (const upgrade of allUpgradeDefinitions) {
+    const level = metaState.upgrades[upgrade.type] || 0
+    if (level > 0) {
+      stats = upgrade.modifyStats({ level, statsBefore: stats })
+    }
+  }
+  metaState.stats = stats
 }
 
 const spawnAsteroids = () => {
