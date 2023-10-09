@@ -6,6 +6,7 @@ import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { Progress } from '../ui/progress'
+import { HudTopRight } from './HudTopRight'
 import { PlanetMenu, planetMenuState } from './PlanetMenu'
 import { ResourceList } from './ResourceList'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
@@ -33,6 +34,7 @@ export const HUD = () => {
           <PlanetMenu />
         </>
       )}
+      <HudTopRight />
     </>
   )
 }
@@ -190,7 +192,7 @@ const HudTitle = () => {
         <div>
           <div
             className={cn(
-              'text-6xl tracking-tighter font-extralight transition-all duration-1000 opacity-0',
+              'text-6xl tracking-tighter font-extralight transition-all duration-1000 opacity-0 text-white',
               init && 'opacity-100',
             )}
           >
