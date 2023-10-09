@@ -1,4 +1,4 @@
-import { proxy } from 'valtio'
+import { proxy, subscribe } from 'valtio'
 import { ResourceMap } from '../statics/resources'
 
 export const metaState = proxy({
@@ -12,3 +12,15 @@ export const metaState = proxy({
   },
   resources: {} as ResourceMap,
 })
+
+if (typeof window !== 'undefined') {
+  metaState.resources = JSON.parse(
+    localStorage.getItem('metaState.resources') || '{}',
+  )
+  subscribe(metaState, () => {
+    localStorage.setItem(
+      'metaState.resources',
+      JSON.stringify(metaState.resources),
+    )
+  })
+}
