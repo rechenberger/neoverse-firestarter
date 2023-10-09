@@ -1,4 +1,5 @@
 import { proxy, subscribe } from 'valtio'
+import { PlanetType } from '../statics/planets'
 import { ResourceMap } from '../statics/resources'
 import { baseStats } from '../statics/stats'
 import { UpgradeMap } from '../statics/upgrades'
@@ -11,6 +12,7 @@ export const metaState = proxy({
   resources: {} as ResourceMap,
   resourcesGathered: {} as ResourceMap,
   upgrades: {} as UpgradeMap,
+  selectedPlanet: 'earth' as PlanetType,
 })
 
 if (typeof window !== 'undefined') {
