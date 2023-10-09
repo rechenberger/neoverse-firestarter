@@ -1,9 +1,9 @@
 import { Fragment } from 'react'
 import { proxy, useSnapshot } from 'valtio'
-import { displayResourceMap } from '../statics/resources'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
+import { ResourceList } from './ResourceList'
 import { metaState } from './metaState'
 import { useUpgrades } from './useUpgrades'
 
@@ -27,24 +27,7 @@ export const UpgradeMenu = () => {
         >
           <SheetTitle>Resources</SheetTitle>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
-            {displayResourceMap(resources).map((resource) => {
-              return (
-                <Fragment key={resource.type}>
-                  <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-                    <div
-                      className="h-3 w-3 rounded-full"
-                      style={{
-                        backgroundColor: resource.definition.color,
-                      }}
-                    />
-                    <div>
-                      <strong>{resource.amount}</strong>
-                      <span className="capitalize">&nbsp;{resource.type}</span>
-                    </div>
-                  </Card>
-                </Fragment>
-              )
-            })}
+            <ResourceList resources={resources} />
           </div>
           <div className="h-2" />
           <SheetTitle>Upgrades</SheetTitle>
@@ -75,26 +58,7 @@ export const UpgradeMenu = () => {
                       variant={upgrade.canUpgrade ? 'default' : 'secondary'}
                       onClick={() => upgrade.doUpgrade()}
                     >
-                      {displayResourceMap(upgrade.costs).map((resource) => {
-                        return (
-                          <Fragment key={resource.type}>
-                            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-                              <div
-                                className="h-3 w-3 rounded-full"
-                                style={{
-                                  backgroundColor: resource.definition.color,
-                                }}
-                              />
-                              <div>
-                                <strong>{resource.amount}</strong>
-                                <span className="capitalize">
-                                  &nbsp;{resource.type}
-                                </span>
-                              </div>
-                            </Card>
-                          </Fragment>
-                        )
-                      })}
+                      <ResourceList resources={upgrade.costs} />
                     </Button>
                   </Card>
                 </Fragment>

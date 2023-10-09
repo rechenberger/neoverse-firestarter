@@ -16,6 +16,7 @@ export const startGame = () => {
   world.clear()
   spawnAsteroids()
   updateStats()
+  metaState.resourcesGathered = {}
   world.add({
     player: {
       spawnPosition: new Vector3(0, 120, 0),

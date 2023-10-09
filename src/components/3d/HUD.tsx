@@ -6,6 +6,7 @@ import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { Progress } from '../ui/progress'
+import { ResourceList } from './ResourceList'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
@@ -125,7 +126,7 @@ const StartButton = () => {
 const EndOfGameDialog = () => {
   const { endOfGame } = useSnapshot(metaState)
   if (!endOfGame) return null
-  const title = endOfGame.success ? 'You Win!' : 'Game over'
+  const title = endOfGame.success ? 'You Win!' : 'Ship destroyed'
   return (
     <>
       <Dialog
@@ -136,7 +137,14 @@ const EndOfGameDialog = () => {
       >
         <DialogContent>
           <DialogTitle>{title}</DialogTitle>
-          <Button onClick={() => (metaState.endOfGame = null)}>OK</Button>
+
+          <hr className="-mx-6" />
+
+          <DialogTitle>Resources gathered:</DialogTitle>
+          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
+            <ResourceList resources={metaState.resourcesGathered} />
+          </div>
+          <Button onClick={() => (metaState.endOfGame = null)}>Collect</Button>
         </DialogContent>
       </Dialog>
     </>

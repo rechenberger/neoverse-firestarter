@@ -33,10 +33,14 @@ export const useAstroidPlayerCollision = () => {
           // Gain Resource:
           const resourceType = eAstroid.asteroid?.resourceType
           if (resourceType) {
-            const currentAmount = metaState.resources[resourceType] || 0
             if (eAstroid.asteroid?.resourceAmount) {
               metaState.resources[resourceType] =
-                currentAmount + eAstroid.asteroid.resourceAmount
+                (metaState.resources[resourceType] || 0) +
+                eAstroid.asteroid.resourceAmount
+
+              metaState.resourcesGathered[resourceType] =
+                (metaState.resourcesGathered[resourceType] || 0) +
+                eAstroid.asteroid.resourceAmount
             }
           }
         } else {

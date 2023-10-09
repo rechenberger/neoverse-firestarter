@@ -9,6 +9,7 @@ export const metaState = proxy({
   endOfGame: null as { success: boolean } | null,
   stats: baseStats,
   resources: {} as ResourceMap,
+  resourcesGathered: {} as ResourceMap,
   upgrades: {} as UpgradeMap,
 })
 
