@@ -57,6 +57,14 @@ export const UpgradeMenu = () => {
                 ([type, amount]) =>
                   (resources[type as ResourceType] || 0) >= amount,
               )
+              const doUpgrade = () => {
+                if (!canUpgrade) return
+                Object.entries(costs).forEach(([type, amount]) => {
+                  metaState.resources[type as ResourceType]! -= amount
+                })
+                metaState.upgrades[upgradeDefinition.type] =
+                  (metaState.upgrades[upgradeDefinition.type] || 0) + 1
+              }
               return (
                 <Fragment key={upgradeDefinition.type}>
                   <Card className="flex flex-col items-stretch gap-2 px-2 py-1">
@@ -80,6 +88,7 @@ export const UpgradeMenu = () => {
                       className="px-1 py-1 flex flex-col gap-1 h-auto items-stretch"
                       disabled={!canUpgrade}
                       variant={canUpgrade ? 'default' : 'secondary'}
+                      onClick={() => doUpgrade()}
                     >
                       {map(costs, (amount: number, type: ResourceType) => {
                         const resourceDefinition = resourceDefinitions[type]
