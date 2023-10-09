@@ -15,6 +15,7 @@ export type Entity = {
     color: string
     resourceType?: ResourceType
     resourceAmount?: number
+    isCore?: boolean
   }
   player?: {
     spawnPosition?: Vector3

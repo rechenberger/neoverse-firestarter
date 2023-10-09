@@ -154,7 +154,7 @@ const StartButton = () => {
 const EndOfGameDialog = () => {
   const { endOfGame } = useSnapshot(metaState)
   if (!endOfGame) return null
-  const title = endOfGame.success ? 'You Win!' : 'Ship destroyed'
+  const title = endOfGame.success ? 'Planet destroyed' : 'Ship destroyed'
   return (
     <>
       <Dialog

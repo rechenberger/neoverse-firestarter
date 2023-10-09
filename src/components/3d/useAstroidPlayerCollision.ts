@@ -27,6 +27,9 @@ export const useAstroidPlayerCollision = () => {
           endGame({ success: false })
         }
         if (eAstroid.health.current <= 0) {
+          if (eAstroid.asteroid?.isCore) {
+            endGame({ success: true })
+          }
           world.remove(eAstroid)
           changeHealth(player, metaState.stats.regain)
 

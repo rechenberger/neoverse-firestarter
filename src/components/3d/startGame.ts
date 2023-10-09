@@ -90,6 +90,7 @@ const spawnAsteroids = ({ planetType }: { planetType: PlanetType }) => {
       spawnPosition: new Vector3(0, 0, 0),
       scale: 10,
       color: 'white',
+      isCore: true,
     },
     health: {
       current: 80,
