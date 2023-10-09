@@ -5,7 +5,7 @@ import { UpgradeType } from '../statics/upgrades'
 import { metaState } from './metaState'
 
 export const usePlanets = () => {
-  const { upgrades } = useSnapshot(metaState)
+  const { upgrades, selectedPlanet } = useSnapshot(metaState)
 
   const upgradeState = useMemo(
     () =>
@@ -16,7 +16,8 @@ export const usePlanets = () => {
             )
           : true
 
-        const canSelect = hasPrerequisites
+        const isSelected = planet.type === selectedPlanet
+        const canSelect = hasPrerequisites && !isSelected
         const show = hasPrerequisites
 
         const select = () => {
@@ -29,9 +30,10 @@ export const usePlanets = () => {
           canSelect,
           show,
           select,
+          isSelected,
         }
       }),
-    [upgrades],
+    [selectedPlanet, upgrades],
   )
 
   return upgradeState

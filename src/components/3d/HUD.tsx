@@ -1,15 +1,17 @@
 import { cn } from '@/lib/utils'
-import { Wrench } from 'lucide-react'
+import { Globe, Wrench } from 'lucide-react'
 import { useEntities } from 'miniplex-react'
 import { useEffect, useState } from 'react'
 import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import { Progress } from '../ui/progress'
+import { PlanetMenu, planetMenuState } from './PlanetMenu'
 import { ResourceList } from './ResourceList'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
+import { useShowPlanetSelection } from './usePlanets'
 import { useCanUpgradeAny, useHasUpgradeAny } from './useUpgrades'
 import { Entity, world } from './world'
 
@@ -28,6 +30,7 @@ export const HUD = () => {
           <StartButton />
           <HudTitle />
           <UpgradeMenu />
+          <PlanetMenu />
         </>
       )}
     </>
@@ -61,6 +64,7 @@ const StartButton = () => {
   const hasUpgrade = useHasUpgradeAny()
   const canUpgrade = useCanUpgradeAny()
   const showUpgrade = hasUpgrade || canUpgrade
+  const showPlanets = useShowPlanetSelection()
   return (
     <>
       <div
@@ -69,6 +73,28 @@ const StartButton = () => {
         )}
       >
         <div className="flex flex-col gap-2">
+          {showPlanets && (
+            <div
+              className={cn(
+                'transition-all duration-1000 opacity-0 delay-1000',
+                init && 'opacity-100',
+              )}
+            >
+              <Button
+                variant="outline"
+                size="lg"
+                className={cn(
+                  'text-lg font-bold py-2 px-4 uppercase flex flex-row gap-2 relative w-full',
+                )}
+                onClick={() => {
+                  planetMenuState.open = true
+                }}
+              >
+                <Globe className="w-4 h-4" />
+                <span>planets</span>
+              </Button>
+            </div>
+          )}
           {showUpgrade && (
             <div
               className={cn(

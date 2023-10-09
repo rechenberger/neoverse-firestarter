@@ -22,6 +22,8 @@ if (typeof window !== 'undefined') {
   metaState.upgrades = JSON.parse(
     localStorage.getItem('metaState.upgrades') || '{}',
   )
+  metaState.selectedPlanet =
+    (localStorage.getItem('metaState.selectedPlanet') as any) || 'earth'
   updateStats()
   subscribe(metaState, () => {
     localStorage.setItem(
@@ -32,5 +34,6 @@ if (typeof window !== 'undefined') {
       'metaState.upgrades',
       JSON.stringify(metaState.upgrades),
     )
+    localStorage.setItem('metaState.selectedPlanet', metaState.selectedPlanet)
   })
 }

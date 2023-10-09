@@ -61,6 +61,9 @@ export const planetDefinitions: Record<PlanetType, PlanetDefinition> = {
         health: 40,
       },
     ],
+    prerequisites: {
+      health: 3,
+    },
   },
 }
 
