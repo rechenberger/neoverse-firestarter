@@ -1,5 +1,6 @@
 import { Vector3 } from 'three'
 import { proxy } from 'valtio'
+import { ResourceType, resourceDefinitions } from '../statics/resources'
 import { metaState } from './metaState'
 import { ECS, world } from './world'
 
@@ -31,15 +32,17 @@ const spawnAsteroids = () => {
   const minRadius = 30
 
   for (let layer = 0; layer < layers; layer++) {
-    let color = 'gray'
     let health = 10
+    let resourceType: ResourceType = 'iron'
     if (layer <= 2) {
-      color = '#eab308'
       health *= 4
+      resourceType = 'silicone'
     } else if (layer <= 6) {
-      color = '#dc2626'
       health *= 2
+      resourceType = 'aluminum'
     }
+    const resource = resourceDefinitions[resourceType]
+
     const radius = minRadius + layer * size
     const circumference = 2 * Math.PI * radius
     const fitInCircumference = Math.floor(circumference / size)
@@ -55,7 +58,9 @@ const spawnAsteroids = () => {
         asteroid: {
           spawnPosition: position,
           scale,
-          color,
+          color: resource.color,
+          resourceType,
+          resourceAmount: 1,
         },
         health: {
           current: health,

@@ -29,6 +29,16 @@ export const useAstroidPlayerCollision = () => {
         if (eAstroid.health.current <= 0) {
           world.remove(eAstroid)
           changeHealth(player, metaState.stats.regain)
+
+          // Gain Resource:
+          const resourceType = eAstroid.asteroid?.resourceType
+          if (resourceType) {
+            const currentAmount = metaState.resources[resourceType] || 0
+            if (eAstroid.asteroid?.resourceAmount) {
+              metaState.resources[resourceType] =
+                currentAmount + eAstroid.asteroid.resourceAmount
+            }
+          }
         } else {
           player.sceneObject.getWorldPosition(tmpVec3)
           let direction = tmpVec3.clone()

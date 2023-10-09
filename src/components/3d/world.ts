@@ -4,6 +4,7 @@ import { RapierRigidBody } from '@react-three/rapier'
 import { World } from 'miniplex'
 import { createReactAPI } from 'miniplex-react'
 import { Object3D, Vector3 } from 'three'
+import { ResourceType } from '../statics/resources'
 
 export { queue } from 'miniplex'
 
@@ -12,6 +13,8 @@ export type Entity = {
     spawnPosition: Vector3
     scale: number
     color: string
+    resourceType?: ResourceType
+    resourceAmount?: number
   }
   player?: {
     spawnPosition?: Vector3

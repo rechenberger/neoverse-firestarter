@@ -1,8 +1,12 @@
+import { map } from 'lodash-es'
 import { Heart, Shield } from 'lucide-react'
+import { Fragment } from 'react'
 import { proxy, useSnapshot } from 'valtio'
+import { ResourceType, resourceDefinitions } from '../statics/resources'
 import { Button } from '../ui/button'
 import { Card } from '../ui/card'
 import { Sheet, SheetContent, SheetTitle } from '../ui/sheet'
+import { metaState } from './metaState'
 
 export const upgradeMenuState = proxy({
   open: false,
@@ -10,6 +14,7 @@ export const upgradeMenuState = proxy({
 
 export const UpgradeMenu = () => {
   const state = useSnapshot(upgradeMenuState)
+  const { resources } = useSnapshot(metaState)
   return (
     <>
       <Sheet
@@ -22,27 +27,25 @@ export const UpgradeMenu = () => {
         >
           <SheetTitle>Resources</SheetTitle>
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
-            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-              <div className="h-3 w-3 rounded-full bg-neutral-500" />
-              <div>
-                <strong>500</strong>
-                <span>&nbsp;Iron</span>
-              </div>
-            </Card>
-            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-              <div className="h-3 w-3 rounded-full bg-yellow-500" />
-              <div>
-                <strong>120</strong>
-                <span>&nbsp;Silicone</span>
-              </div>
-            </Card>
-            <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
-              <div className="h-3 w-3 rounded-full bg-red-500" />
-              <div>
-                <strong>34</strong>
-                <span>&nbsp;Aluminum</span>
-              </div>
-            </Card>
+            {map(resources, (amount: number, type: ResourceType) => {
+              const resourceDefinition = resourceDefinitions[type]
+              return (
+                <Fragment key={type}>
+                  <Card className="flex flex-row gap-2 px-2 py-1 items-center text-sm">
+                    <div
+                      className="h-3 w-3 rounded-full"
+                      style={{
+                        backgroundColor: resourceDefinition.color,
+                      }}
+                    />
+                    <div>
+                      <strong>{amount}</strong>
+                      <span className="capitalize">&nbsp;{type}</span>
+                    </div>
+                  </Card>
+                </Fragment>
+              )
+            })}
           </div>
           <div className="h-2" />
           <SheetTitle>Upgrades</SheetTitle>

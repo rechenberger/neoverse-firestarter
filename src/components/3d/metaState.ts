@@ -1,4 +1,5 @@
 import { proxy } from 'valtio'
+import { ResourceMap } from '../statics/resources'
 
 export const metaState = proxy({
   mode: 'menu' as 'menu' | 'gameplay',
@@ -9,4 +10,5 @@ export const metaState = proxy({
     armor: 5,
     regain: 2,
   },
+  resources: {} as ResourceMap,
 })
