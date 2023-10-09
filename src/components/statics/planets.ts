@@ -39,7 +39,26 @@ export const planetDefinitions: Record<PlanetType, PlanetDefinition> = {
   },
   moon: {
     color: '#737373',
-    layers: [],
+    layers: [
+      {
+        size: 2,
+        resourceType: 'rock',
+        resourceAmount: 1,
+        health: 10,
+      },
+      {
+        size: 8,
+        resourceType: 'coal',
+        resourceAmount: 1,
+        health: 20,
+      },
+      {
+        size: 3,
+        resourceType: 'sulfur',
+        resourceAmount: 1,
+        health: 40,
+      },
+    ],
   },
 }
 

@@ -1,6 +1,12 @@
 import { indexOf, orderBy } from 'lodash-es'
 
-export type ResourceType = 'iron' | 'silicone' | 'aluminum'
+export type ResourceType =
+  | 'iron'
+  | 'silicone'
+  | 'aluminum'
+  | 'rock'
+  | 'coal'
+  | 'sulfur'
 
 type ResourceDefinition = {
   color: string
@@ -15,6 +21,15 @@ export const resourceDefinitions: Record<ResourceType, ResourceDefinition> = {
   },
   aluminum: {
     color: '#ef4444',
+  },
+  rock: {
+    color: '#a3a3a3',
+  },
+  coal: {
+    color: '#27272a',
+  },
+  sulfur: {
+    color: '#605F4A',
   },
 }
 
