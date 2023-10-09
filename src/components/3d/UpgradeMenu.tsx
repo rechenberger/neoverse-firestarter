@@ -32,7 +32,7 @@ export const UpgradeMenu = () => {
           </div>
           <div className="h-2" />
           <SheetTitle>Upgrades</SheetTitle>
-          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
+          <div className="grid gap-2 grid-cols-2">
             {upgrades.map((upgrade) => {
               if (!upgrade.show) return null
               return (

@@ -62,7 +62,7 @@ export const planetDefinitions: Record<PlanetType, PlanetDefinition> = {
       },
     ],
     prerequisites: {
-      health: 3,
+      discoverMoon: 1,
     },
   },
 }

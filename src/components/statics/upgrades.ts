@@ -1,7 +1,7 @@
 import { ResourceMap } from './resources'
 import { Stats } from './stats'
 
-export type UpgradeType = 'health' | 'drillDamage' | 'shield'
+export type UpgradeType = 'health' | 'drillDamage' | 'shield' | 'discoverMoon'
 
 type UpgradeDefinition = {
   title: string
@@ -36,6 +36,16 @@ export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
     modifyStats: ({ level, statsBefore }) => ({
       ...statsBefore,
       drillDamage: statsBefore.drillDamage + 10 * level,
+    }),
+  },
+  discoverMoon: {
+    title: 'Apollo Program',
+    maxLevel: 1,
+    getDescription: () => `Reach for the Moon`,
+    getCosts: () => ({
+      iron: 30,
+      silicone: 20,
+      aluminum: 10,
     }),
   },
   shield: {
