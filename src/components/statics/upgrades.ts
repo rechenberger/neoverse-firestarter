@@ -8,7 +8,7 @@ type UpgradeDefinition = {
   maxLevel: number
   getDescription: (level: number) => string
   getCosts: (options: { level: number }) => ResourceMap
-  modifyStats: (options: { level: number; statsBefore: Stats }) => Stats
+  modifyStats?: (options: { level: number; statsBefore: Stats }) => Stats
   prerequisites?: UpgradeMap
 }
 

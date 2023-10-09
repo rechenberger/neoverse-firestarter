@@ -36,7 +36,7 @@ export const updateStats = () => {
   let stats = { ...baseStats }
   for (const upgrade of allUpgradeDefinitions) {
     const level = metaState.upgrades[upgrade.type] || 0
-    if (level > 0) {
+    if (level > 0 && upgrade.modifyStats) {
       stats = upgrade.modifyStats({ level, statsBefore: stats })
     }
   }
