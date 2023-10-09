@@ -13,7 +13,7 @@ type UpgradeDefinition = {
 export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
   health: {
     maxLevel: 10,
-    description: `+10 Health / level`,
+    description: `+10 Health`,
     getCosts: ({ level }) => ({
       iron: 10 * 2 ** level,
     }),
@@ -24,7 +24,7 @@ export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
   },
   drillDamage: {
     maxLevel: 10,
-    description: `+10 Drill Damage / level`,
+    description: `+10 Drill Damage`,
     getCosts: ({ level }) => ({
       silicone: 10 * 2 ** level,
       aluminum: 1 * 2 ** level,
