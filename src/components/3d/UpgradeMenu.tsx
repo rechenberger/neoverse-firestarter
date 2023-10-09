@@ -50,7 +50,7 @@ export const UpgradeMenu = () => {
                         <div
                           className={cn(
                             'text-sm opacity-60',
-                            upgrade.level && 'text-primary',
+                            !!upgrade.level && 'text-primary',
                           )}
                         >
                           {upgrade.getDescription(upgrade.level || 1)}
