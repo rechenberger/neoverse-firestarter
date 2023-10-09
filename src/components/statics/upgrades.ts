@@ -5,8 +5,8 @@ export type UpgradeType = 'health' | 'drillDamage'
 
 type UpgradeDefinition = {
   title: string
-  description: string
   maxLevel: number
+  getDescription: (level: number) => string
   getCosts: (options: { level: number }) => ResourceMap
   modifyStats: (options: { level: number; statsBefore: Stats }) => Stats
 }
@@ -14,8 +14,8 @@ type UpgradeDefinition = {
 export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
   health: {
     title: 'Fuel Tank',
-    description: `+10 Health`,
     maxLevel: 10,
+    getDescription: (level) => `+${10 * level} Health`,
     getCosts: ({ level }) => ({
       iron: 10 * 2 ** level,
     }),
@@ -26,7 +26,7 @@ export const upgradeDefinitions: Record<UpgradeType, UpgradeDefinition> = {
   },
   drillDamage: {
     title: 'Drill Coating',
-    description: `+10 Drill Damage`,
+    getDescription: (level) => `+${10 * level} Drill Damage`,
     maxLevel: 10,
     getCosts: ({ level }) => ({
       silicone: 10 * 2 ** level,

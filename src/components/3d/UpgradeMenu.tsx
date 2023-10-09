@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { Fragment } from 'react'
 import { proxy, useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
@@ -46,8 +47,13 @@ export const UpgradeMenu = () => {
                             {upgrade.level}/{upgrade.maxLevel}
                           </div>
                         </div>
-                        <div className="text-sm opacity-60">
-                          {upgrade.description}
+                        <div
+                          className={cn(
+                            'text-sm opacity-60',
+                            upgrade.level && 'text-primary',
+                          )}
+                        >
+                          {upgrade.getDescription(upgrade.level || 1)}
                         </div>
                       </div>
                       {/* <Shield className="w-8 h-8 opacity-60" /> */}
