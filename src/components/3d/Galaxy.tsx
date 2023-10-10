@@ -24,7 +24,7 @@ export const Galaxy = () => {
         <Physics
           gravity={[0, 0, 0]}
           colliders={false}
-          // timeStep="vary"
+          timeStep="vary"
           debug={DEBUG}
           paused={paused}
         >
