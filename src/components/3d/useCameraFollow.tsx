@@ -1,7 +1,7 @@
-import { useFrame } from '@react-three/fiber'
 import { first } from 'lodash-es'
 import { useEntities } from 'miniplex-react'
 import { Quaternion, Vector3 } from 'three'
+import { useGameplayFrame } from './useGameplayFrame'
 import { ECS } from './world'
 
 const playerQuery = ECS.world.with('player', 'sceneObject')
@@ -14,7 +14,7 @@ const zUp = new Vector3(0, 0, 1)
 export const useCameraFollow = () => {
   const players = useEntities(playerQuery)
   const camera = useEntities(cameraQuery)
-  useFrame(() => {
+  useGameplayFrame(() => {
     const player = first(players.entities)
     if (!player) return
     const cameraControls = first(camera.entities)?.cameraControls

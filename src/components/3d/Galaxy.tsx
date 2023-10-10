@@ -14,13 +14,9 @@ import { metaState } from './metaState'
 
 const DEBUG = false
 
-const useIsPaused = () => {
-  const { mode } = useSnapshot(metaState)
-  return mode !== 'gameplay'
-}
-
 export const Galaxy = () => {
-  const isPaused = useIsPaused()
+  const { mode, paused } = useSnapshot(metaState)
+  const isGameplay = mode === 'gameplay'
   return (
     <>
       <Canvas className="bg-gradient-to-tr from-black to-black bg-blend-darken flex-1">
@@ -28,12 +24,12 @@ export const Galaxy = () => {
         <Physics
           gravity={[0, 0, 0]}
           colliders={false}
-          timeStep="vary"
+          // timeStep="vary"
           debug={DEBUG}
-          paused={isPaused}
+          paused={paused}
         >
-          {!isPaused && <Camera />}
-          {isPaused && <MenuScene />}
+          {isGameplay && <Camera />}
+          {!isGameplay && <MenuScene />}
           <GalaxyEnvironment />
           <Player />
           <Asteroids />

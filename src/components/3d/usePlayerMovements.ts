@@ -1,6 +1,6 @@
-import { useFrame } from '@react-three/fiber'
 import { Vector3 } from 'three'
 import { useDeviceOrientationInput } from './useDeviceOrientationInput'
+import { useGameplayFrame } from './useGameplayFrame'
 import { useKeyboardMovementDirection } from './useKeyboardInput'
 import { ECS } from './world'
 
@@ -14,7 +14,7 @@ export const usePlayerMovement = () => {
   const deviceOrientationDirection = useDeviceOrientationInput()
   const movementDirection = deviceOrientationDirection?.vector || keyDirection
   // console.log(movementDirection)
-  useFrame(() => {
+  useGameplayFrame(() => {
     for (const player of players.entities) {
       // console.log(player)
       const rb = player.rigidBody

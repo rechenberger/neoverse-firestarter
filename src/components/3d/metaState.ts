@@ -7,6 +7,7 @@ import { updateStats } from './startGame'
 
 export const metaState = proxy({
   mode: 'menu' as 'menu' | 'gameplay',
+  paused: false,
   endOfGame: null as { success: boolean } | null,
   stats: baseStats,
   resources: {} as ResourceMap,

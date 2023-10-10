@@ -12,6 +12,7 @@ import { ResourceList } from './ResourceList'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
 import { startGame } from './startGame'
+import { useKeyboardShortcut } from './useKeyboardShortcut'
 import { useShowPlanetSelection } from './usePlanets'
 import { useCanUpgradeAny, useHasUpgradeAny } from './useUpgrades'
 import { Entity, world } from './world'
@@ -22,6 +23,14 @@ export const HUD = () => {
   const players = useEntities(playerQuery)
   const player = players.entities?.[0]
   const { mode } = useSnapshot(metaState)
+  useKeyboardShortcut(
+    {
+      code: 'KeyP',
+    },
+    () => {
+      metaState.paused = !metaState.paused
+    },
+  )
   return (
     <>
       {!!player && <HudPlayer player={player} />}
@@ -136,7 +145,6 @@ const StartButton = () => {
               size="lg"
               onClick={() => {
                 startGame()
-                metaState.mode = 'gameplay'
               }}
               className={cn(
                 'text-3xl italic font-extrabold py-8 px-16 uppercase w-full',

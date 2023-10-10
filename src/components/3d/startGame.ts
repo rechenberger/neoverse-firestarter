@@ -30,6 +30,8 @@ export const startGame = () => {
       max: metaState.stats.health,
     }),
   })
+  metaState.paused = false
+  metaState.mode = 'gameplay'
 }
 
 export const updateStats = () => {
