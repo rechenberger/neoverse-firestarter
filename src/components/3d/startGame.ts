@@ -8,10 +8,11 @@ import { allUpgradeDefinitions } from '../statics/upgrades'
 import { metaState } from './metaState'
 import { ECS, world } from './world'
 
-export const endGame = (endOfGame: { success: boolean }) => {
+export const endGame = (endOfGame: { success: boolean } | null) => {
   world.clear()
   metaState.endOfGame = endOfGame
   metaState.mode = 'menu'
+  metaState.paused = false
 }
 
 export const startGame = () => {

@@ -11,7 +11,7 @@ import { PlanetMenu, planetMenuState } from './PlanetMenu'
 import { ResourceList } from './ResourceList'
 import { UpgradeMenu, upgradeMenuState } from './UpgradeMenu'
 import { metaState } from './metaState'
-import { startGame } from './startGame'
+import { endGame, startGame } from './startGame'
 import { useKeyboardShortcut } from './useKeyboardShortcut'
 import { useShowPlanetSelection } from './usePlanets'
 import { useCanUpgradeAny, useHasUpgradeAny } from './useUpgrades'
@@ -194,7 +194,7 @@ const EndOfGameDialog = () => {
 }
 
 const PausedDialog = () => {
-  const { paused } = useSnapshot(metaState)
+  const { paused, mode } = useSnapshot(metaState)
   if (!paused) return null
   const unpause = () => (metaState.paused = false)
   return (
@@ -205,7 +205,7 @@ const PausedDialog = () => {
           if (!open) unpause()
         }}
       >
-        <DialogContent>
+        <DialogContent onEscapeKeyDown={(evt) => evt.preventDefault()}>
           <DialogTitle>Game paused</DialogTitle>
 
           <hr className="-mx-6" />
@@ -219,6 +219,9 @@ const PausedDialog = () => {
             <ResourceList resources={metaState.resourcesGathered} />
           </div>
           <Button onClick={() => unpause()}>Continue</Button>
+          <Button onClick={() => endGame(null)} variant="outline">
+            Back to menu
+          </Button>
         </DialogContent>
       </Dialog>
     </>
