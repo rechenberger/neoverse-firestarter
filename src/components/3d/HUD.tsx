@@ -25,16 +25,19 @@ export const HUD = () => {
   const { mode } = useSnapshot(metaState)
   useKeyboardShortcut(
     {
-      code: 'KeyP',
+      code: 'Escape',
     },
     () => {
-      metaState.paused = !metaState.paused
+      if (metaState.mode === 'gameplay') {
+        metaState.paused = !metaState.paused
+      }
     },
   )
   return (
     <>
       {!!player && <HudPlayer player={player} />}
       <EndOfGameDialog />
+      <PausedDialog />
       {mode === 'menu' && (
         <>
           <StartButton />
@@ -177,10 +180,45 @@ const EndOfGameDialog = () => {
           <hr className="-mx-6" />
 
           <DialogTitle>Resources gathered:</DialogTitle>
+          {!Object.keys(metaState.resourcesGathered).length && (
+            <div className="opacity-60">No resources gathered.</div>
+          )}
           <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
             <ResourceList resources={metaState.resourcesGathered} />
           </div>
           <Button onClick={() => (metaState.endOfGame = null)}>Collect</Button>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+const PausedDialog = () => {
+  const { paused } = useSnapshot(metaState)
+  if (!paused) return null
+  const unpause = () => (metaState.paused = false)
+  return (
+    <>
+      <Dialog
+        open
+        onOpenChange={(open) => {
+          if (!open) unpause()
+        }}
+      >
+        <DialogContent>
+          <DialogTitle>Game paused</DialogTitle>
+
+          <hr className="-mx-6" />
+
+          <DialogTitle>Resources gathered:</DialogTitle>
+
+          {!Object.keys(metaState.resourcesGathered).length && (
+            <div className="opacity-60">No resources gathered, yet.</div>
+          )}
+          <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
+            <ResourceList resources={metaState.resourcesGathered} />
+          </div>
+          <Button onClick={() => unpause()}>Continue</Button>
         </DialogContent>
       </Dialog>
     </>
