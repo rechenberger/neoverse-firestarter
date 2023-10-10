@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Slider } from '../ui/slider'
 import { metaState } from './metaState'
 
-const musicVolumeAtom = atomWithStorage('musicVolume', 50)
+const musicVolumeAtom = atomWithStorage('musicVolume', 20)
 
 export const MusicButton = () => {
   const ref = useRef<HTMLAudioElement>(null)
