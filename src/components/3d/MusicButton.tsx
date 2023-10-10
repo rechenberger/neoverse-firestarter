@@ -6,23 +6,25 @@ import { useSnapshot } from 'valtio'
 import { Button } from '../ui/button'
 import { Label } from '../ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Switch } from '../ui/switch'
+import { Slider } from '../ui/slider'
 import { metaState } from './metaState'
 
-const musicEnabledAtom = atomWithStorage('musicEnabled', true)
+const musicVolumeAtom = atomWithStorage('musicVolume', 50)
 
 export const MusicButton = () => {
   const ref = useRef<HTMLAudioElement>(null)
   const { mode } = useSnapshot(metaState)
-  const [musicEnabled, setMusicEnabled] = useAtom(musicEnabledAtom)
+  const [volume, setVolume] = useAtom(musicVolumeAtom)
   const [musicPopoverOpen, setMusicPopoverOpen] = useState(false)
   useEffect(() => {
-    if (musicEnabled) {
-      ref.current?.play()
+    if (!ref.current) return
+    if (volume) {
+      ref.current.play()
     } else {
-      ref.current?.pause()
+      ref.current.pause()
     }
-  }, [musicEnabled, mode, musicPopoverOpen])
+    ref.current.volume = volume / 100
+  }, [volume, mode, musicPopoverOpen])
   return (
     <>
       <audio src="/music/cyberpunk.mp3" loop ref={ref} />
@@ -35,7 +37,12 @@ export const MusicButton = () => {
         <PopoverContent className="mx-4">
           <Label className="flex flex-row gap-4 items-center">
             <span className="flex-1">Music</span>
-            <Switch checked={musicEnabled} onCheckedChange={setMusicEnabled} />
+            <Slider
+              value={[volume]}
+              onValueChange={(v) => setVolume(v[0])}
+              max={100}
+              step={1}
+            />
           </Label>
           <div className="text-xs opacity-60 mt-4">
             Cyberpunk Computer Game | IDRA by Alex-Productions |
